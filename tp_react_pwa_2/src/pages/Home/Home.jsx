@@ -68,36 +68,39 @@ const Home = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
-
+  
     if (authorizationCode) {
       console.log("Authorization code:", authorizationCode);
-
+  
       // Actualiza el estado con el código de autorización
       setCode(authorizationCode);
-
+  
       // Guarda el código de autorización en localStorage
       localStorage.setItem("authorization_code", authorizationCode);
-
+  
       // Intercambiar el código por un token de acceso
       getToken(authorizationCode);
-
+  
       // Limpia la URL eliminando los parámetros de búsqueda
       const newUrl = window.location.origin + window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
-
-      
-
-      
     }
-
-    
   }, []);
-
+  
+  useEffect(() => {
+    if(localStorage.getItem("access_token")){
+      setAccessToken(localStorage.getItem("access_token"));
+    }
+  },[])
 
   useEffect(() => {
-    setAccessToken(localStorage.getItem("access_token"));
-    getTracksByGenre("metal");
-  }, [access_token])
+    // Solo llama a getTracksByGenre si el access_token está disponible
+    if (access_token) {
+      getTracksByGenre("metal");
+    } else {
+      console.warn("Access token is not available yet.");
+    }
+  }, [access_token]); // Dependencia en access_token
 
 
   const fetchUserProfile = async () => {
