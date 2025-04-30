@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Home.module.css";
 import Authorization from "../../components/Authorization/Authorization";
+import AddToFav from "../../components/AddToFavorite/AddToFavorite";
 
 const Home = () => {
 
@@ -96,7 +97,7 @@ const Home = () => {
   useEffect(() => {
     // Solo llama a getTracksByGenre si el access_token está disponible
     if (access_token) {
-      getTracksByGenre("metal");
+      getTracksByGenre();
     } else {
       console.warn("Access token is not available yet.");
     }
@@ -267,7 +268,7 @@ const Home = () => {
   
     if (!access_token) {
       throw new Error("Access token is missing.");
-        return [];
+        
     }
 
     const url = `https://api.spotify.com/v1/search?q=genre:${encodeURIComponent(genre)}&type=track&limit=10`;
@@ -282,6 +283,7 @@ const Home = () => {
 
         if (!response.ok) {
             throw new Error("Error fetching tracks by genre");
+            
         }
 
         const data = await response.json();
@@ -289,6 +291,7 @@ const Home = () => {
         return data.tracks.items; // Devuelve las canciones
     } catch (error) {
         console.error("Error:", error);
+        console.error("message:", message);
         return [];
     }
 };
@@ -332,6 +335,11 @@ const Genres = () => {
 
         <div className="profile">
           <button onClick={fetchUserProfile}>Perfil</button>
+        </div>
+
+
+        <div className="fav">
+          <AddToFav/>
         </div>
       </div>
     </div>
