@@ -1,6 +1,15 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, use} from "react";
 import styles from "./Home.module.css";
+import Card from "../../components/Card/Card"
+import Section from "../../components/Section/Section";
+import CardGenre from "../../components/CardGenre/CardGenre";
+import CardType from "../../components/CardType/CardType";
 import Authorization from "../../components/Authorization/Authorization";
+
+import { genres } from "../../assets/fakeData/genres";
+import { fakeArtists } from "../../assets/fakeData/fakeArtists";
+import { fakePlaylists } from "../../assets/fakeData/fakePlaylists";
+import { fakeTracks } from "../../assets/fakeData/fakeTracks";
 
 const Home = () => {
 
@@ -168,9 +177,6 @@ const Home = () => {
   //    .then(result => console.log(result))
   //    .catch(error => console.log('error', error));
 
-  const [genre, setGenre] = useState("");
-  const [artistas, setArtistas] = useState([]);
-  const [error, setError] = useState(null);
 
   //https://api.spotify.com/v1/browse/categories/{category_id}/playlists
   // https://api.spotify.com/v1/browse/categories//playlists?country=AR&limit=20&offset
@@ -309,6 +315,42 @@ const Genres = () => {
   // Usarlo:
   // o 'hip-hop', 'classical', etc.
 
+
+
+  //useState's
+  
+  const [error, setError] = useState(null);
+
+  const [selectedGenre, setSelectedGenre] = useState();
+
+  const [tracks, setTracks] = useState([]);
+
+  const [artists, setArtists] = useState([]);
+
+  const [playlists, setPlaylists] = useState([]);
+
+  useEffect(()=>{
+    if (!selectedGenre) return;
+
+    /*los fetch
+    fetchSpotifyData (selectedGenre, "tracks", setTracks)
+    fetchSpotifyData (selectedGenre, "artist", setArtists)
+    fetchSpotifyData (selectedGenre, "playlist", setPlaylists)
+    */
+    setTimeout(() => {
+      setTracks(fakeTracks[selectedGenre] || []);
+    setArtists(fakeArtists[selectedGenre] || []);
+    setPlaylists(fakePlaylists[selectedGenre] || []);
+    }, 1000); // 
+  }, [selectedGenre])
+
+  const handleGenreClick = (genreId) => {
+    setSelectedGenre(genreId);
+  };
+
+  const handleBackGenre = () => {
+    setSelectedGenre(null);
+  };
   return (
     <div>
       <h1>Home</h1>
@@ -330,9 +372,29 @@ const Genres = () => {
           <Genres/>
         </div>
 
-        <div className="profile">
+        <div>
           <button onClick={fetchUserProfile}>Perfil</button>
         </div>
+      </div>
+      <div >
+        {selectedGenre ? 
+             (
+              <>
+              
+              <button onClick={handleBackGenre} className="absoulte">🠔</button>
+                <Section title={`Canciones de ${selectedGenre}`} items={tracks} CardComponent={CardType} />
+                <Section title={`Artistas de ${selectedGenre}`} items={artists} CardComponent={CardType} />
+                <Section title={`Playlists de ${selectedGenre}`} items={playlists} CardComponent={CardType} />
+              </>
+             )
+        
+        : <Section 
+        title="Géneros"
+        items={genres}
+        CardComponent={(props) => <CardGenre {...props} onClick={handleGenreClick} />}
+      />
+      
+      }
       </div>
     </div>
   );

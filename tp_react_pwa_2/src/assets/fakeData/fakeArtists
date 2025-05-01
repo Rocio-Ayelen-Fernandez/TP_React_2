@@ -1,0 +1,24 @@
+export const fakeArtists = {
+    rock: [
+      { id: "a1", name: "Rock Band", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    pop: [
+      { id: "a2", name: "Pop Star", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    rnb: [
+      { id: "a3", name: "R&B Artist", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    funk: [
+      { id: "a4", name: "Funk Legend", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    disco: [
+      { id: "a5", name: "Disco Diva", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    electronica: [
+      { id: "a6", name: "Electro DJ", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ],
+    kpop: [
+      { id: "a7", name: "K-Pop Group", image: "https://picsum.photos/seed/picsum/200/200", type: "artist" },
+    ]
+  };
+  
