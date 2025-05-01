@@ -1,33 +1,27 @@
 import { useEffect, useState } from "react";
+import getTrackById from "../../services/getTrackById";
 
 const Player = ({ id, access_token }) => {
   const [track, setTrack] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (id && access_token) {
-      getTrack(id);
-    }
+    const fetchTrack = async () => {
+      if (id && access_token) {
+        try {
+          const trackData = await getTrackById(access_token, id);
+          setTrack(trackData);
+          setError(null); // Limpiar errores previos
+        } catch (err) {
+          console.error("Error in Player component:", err.message);
+          setError("Failed to load track. Please try again.");
+        }
+      }
+    };
+
+    fetchTrack();
   }, [id, access_token]);
 
-  const getTrack = async (id) => {
-    if (!access_token) return;
-
-    try {
-      const response = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error("Error fetching track data");
-
-      const data = await response.json();
-      setTrack(data);
-      console.log("Track data:", data);
-    } catch (error) {
-      console.error("Error fetching track:", error.message);
-    }
-  };
 
   return (
     <div className="container">
@@ -35,7 +29,7 @@ const Player = ({ id, access_token }) => {
         {track ? (
           <iframe
             style={{ borderRadius: "12px" }}
-            src={`https://open.spotify.com/embed/track/${id}`}
+            src={`https://open.spotify.com/embed/track/${track.id}`}
             width="40%"
             height="152"
             frameBorder="0"

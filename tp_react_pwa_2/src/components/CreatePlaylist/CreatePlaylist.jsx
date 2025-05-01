@@ -38,25 +38,7 @@ const CreatePlaylist = () => {
         }
     }, [playlist]);
 
-    // const getTrack = async (id) => {
-    //     if (!access_token) throw new Error("Access token is missing.");
     
-    //     try {
-    //       const response = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
-    //         headers: {
-    //           Authorization: `Bearer ${access_token}`,
-    //         },
-    //       });
-    
-    //       if (!response.ok) throw new Error("Error fetching track data");
-    
-    //       const data = await response.json();
-    //       setTrack(data);
-    //       console.log("Track data:", data);
-    //     } catch (error) {
-    //       console.error("Error fetching track:", error.message);
-    //     }
-    //   };
 
       const handleAddToPlaylist = async () => {
 

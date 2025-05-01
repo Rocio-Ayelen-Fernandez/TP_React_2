@@ -4,6 +4,7 @@ import Authorization from "../../components/Authorization/Authorization";
 import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
 import Player from "../../components/Player/Player";
 import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
+import ListFavorite from "../../components/ListFavorite/ListFavorite";
 
 const Home = () => {
 
@@ -348,7 +349,7 @@ const Genres = () => {
         <div>
           <h4>Spotify Track Preview</h4>
           {access_token ? (
-            <Player id="0GYlK3tfbzyMxyP02eFyST" access_token={access_token} />
+            <Player id="11dFghVXANMlKmJXsNCbNl" access_token={access_token} />
           ) : (
             <p>Loading access token...</p>
           )}
@@ -361,6 +362,19 @@ const Genres = () => {
             <CreatePlaylist  />
 
           </div>
+
+          <div className="list-fav">
+            <h4>Lista de Favoritos</h4>
+            
+            {access_token ? (
+              <ListFavorite access_token={access_token} />
+            ) : (
+              <p>Loading access token...</p>
+            )}
+            
+           
+          </div>
+        
 
       </div>
     </div>
