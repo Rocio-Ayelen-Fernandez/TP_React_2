@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Home.module.css";
 import Authorization from "../../components/Authorization/Authorization";
-import AddToFav from "../../components/AddToFavorite/AddToFavorite";
+import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
+import Player from "../../components/Player/Player";
+import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
 
 const Home = () => {
 
@@ -339,8 +341,27 @@ const Genres = () => {
 
 
         <div className="fav">
-          <AddToFav/>
+          <AddToFavorite id={243} type={"track"}/>
         </div>
+
+
+        <div>
+          <h4>Spotify Track Preview</h4>
+          {access_token ? (
+            <Player id="0GYlK3tfbzyMxyP02eFyST" access_token={access_token} />
+          ) : (
+            <p>Loading access token...</p>
+          )}
+        </div>
+
+
+
+          <div className="playlist">
+
+            <CreatePlaylist  />
+
+          </div>
+
       </div>
     </div>
   );

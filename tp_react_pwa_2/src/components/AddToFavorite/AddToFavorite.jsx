@@ -3,34 +3,45 @@ import style from "./AddToFavorite.module.css"
 
 
 
-const AddToFav = (id) => {
+const AddToFav = ({ id, type }) => {
     
-    const [favorites, setFavorites] = useState([])
+    const [favorites, setFavorites] = useState({})
 
+    //Carga el localStorage al iniciar el componente
+    // y lo guarda en el estado de favoritos
     useEffect (() => {
 
         const storedFavorites = localStorage.getItem('favorites')
         if (storedFavorites) {
             setFavorites(JSON.parse(storedFavorites))
         } else {
-            setFavorites([])
+            setFavorites({})
         }
 
     },[])
 
-    // useEffect(() =>{
-    //     console.log(id);
-    // },[id])
+    //
+    const handleAddToFavorites = () => {
 
-    const handleAddToFavorites = (id) => {
-
-        if(id){
-            const updatedFavorites = [...favorites, id]
-            localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
-            setFavorites([...favorites, id])
-
-            console.log(localStorage.getItem("favorites",[id]));
-        }
+        if (id && type) {
+            
+            const updatedFavorites = { ...favorites };
+      
+            //Si no existe el tipo en el objeto de favoritos, lo crea
+            if (!updatedFavorites[type]) {
+              updatedFavorites[type] = [];
+            }
+      
+            //Si no esta el mismo id en el array de favoritos, lo agrega
+            if (!updatedFavorites[type].includes(id)) {
+              updatedFavorites[type].push(id);
+            }
+      
+            // Actualiza el localStorage y el estado
+            localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+            setFavorites(updatedFavorites);
+            console.log("Updated favorites:", updatedFavorites);
+          }
         
         
     }
@@ -38,7 +49,7 @@ const AddToFav = (id) => {
     
     return (
         <div className={style.container}>
-            <button onClick={() => handleAddToFavorites(id)}></button>         
+            <button onClick={handleAddToFavorites}>&lt;3</button>         
         </div>
     )
 
