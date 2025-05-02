@@ -3,19 +3,19 @@ import style from "./AddToFavorite.module.css"
 
 
 
-const AddToFav = ({ id, type }) => {
+const AddToFavorite = ({ id, type }) => {
     
-    const [favorites, setFavorites] = useState({})
+    const [favorite, setFavorite] = useState({})
 
     //Carga el localStorage al iniciar el componente
     // y lo guarda en el estado de favoritos
     useEffect (() => {
 
-        const storedFavorites = localStorage.getItem('favorites')
+        const storedFavorites = localStorage.getItem('favorite')
         if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites))
+            setFavorite(JSON.parse(storedFavorites))
         } else {
-            setFavorites({})
+            setFavorite({})
         }
 
     },[])
@@ -25,7 +25,7 @@ const AddToFav = ({ id, type }) => {
 
         if (id && type) {
             
-            const updatedFavorites = { ...favorites };
+            const updatedFavorites = { ...favorite };
       
             //Si no existe el tipo en el objeto de favoritos, lo crea
             if (!updatedFavorites[type]) {
@@ -38,9 +38,9 @@ const AddToFav = ({ id, type }) => {
             }
       
             // Actualiza el localStorage y el estado
-            localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-            setFavorites(updatedFavorites);
-            console.log("Updated favorites:", updatedFavorites);
+            localStorage.setItem("favorite", JSON.stringify(updatedFavorites));
+            setFavorite(updatedFavorites);
+            console.log("Updated favorite:", updatedFavorites);
           }
         
         
@@ -55,4 +55,4 @@ const AddToFav = ({ id, type }) => {
 
 }
 
-export default AddToFav
+export default AddToFavorite

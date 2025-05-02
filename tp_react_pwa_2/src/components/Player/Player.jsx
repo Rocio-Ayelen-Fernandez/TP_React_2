@@ -30,7 +30,7 @@ const Player = ({ id, access_token }) => {
           <iframe
             style={{ borderRadius: "12px" }}
             src={`https://open.spotify.com/embed/track/${track.id}`}
-            width="40%"
+            width="50%"
             height="152"
             frameBorder="0"
             allowFullScreen

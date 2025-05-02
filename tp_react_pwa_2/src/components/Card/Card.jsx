@@ -1,10 +1,5 @@
-
-const Card = (object, children) => {
-    return (
-        <div>
-            {children}
-        </div>
-    )
-}
-
-export default Card
+const Card = ({ children }) => {
+    return <div>{children}</div>;
+  };
+  
+  export default Card

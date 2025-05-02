@@ -6,15 +6,29 @@ import Player from "../../components/Player/Player";
 import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
 import ListFavorite from "../../components/ListFavorite/ListFavorite";
 
+import Card from "../../components/Card/Card"
+import Section from "../../components/Section/Section";
+import CardGenre from "../../components/CardGenre/CardGenre";
+import CardType from "../../components/CardType/CardType";
+import { genres } from "../../assets/fakeData/genres";
+import { fakeArtists } from "../../assets/fakeData/fakeArtists";
+import { fakePlaylists } from "../../assets/fakeData/fakePlaylists";
+import { fakeTracks } from "../../assets/fakeData/fakeTracks";
+import { ROUTES } from "../../const/routes.js";
+
+
 const Home = () => {
 
 
   const clientId = "5c271aa13f7641f8b283fae8ab5c8f70";
-  const redirectUri = "http://127.0.0.1:5173/index.html";
+  const redirectUri = "http://127.0.0.1:5173/home";
   const [code, setCode] = useState(
     localStorage.getItem("authorization_code") || ""
   );
   const [access_token, setAccessToken] = useState("");
+
+  const [user, setUser] = useState(null);
+
 
   const getToken = async (code) => {
     const codeVerifier = localStorage.getItem("code_verifier");
@@ -267,6 +281,8 @@ const Home = () => {
   
   */
  
+
+//Mover a Services
   const getTracksByGenre = async (genre = 'pop') => {
   
     if (!access_token) {
@@ -315,11 +331,57 @@ const Genres = () => {
   // Usarlo:
   // o 'hip-hop', 'classical', etc.
 
+
+
+  // const getUserPlaylist = async () => {
+
+  //   const response = await fetch(`https://api.spotify.com/v1/users/lxc8p8106hk2jzve68p5izobs/playlists`, {
+  //   headers: {
+  //     Authorization: `Bearer ${access_token}`,
+  //   },
+  // })
+  //   .then(res => res.json())
+  //   .then(data => console.log('USER PLAYLISTS:', data));
+  
+  // }
+  // getUserPlaylist()
+
+
+  
+  const [selectedGenre, setSelectedGenre] = useState();
+
+  const [tracks, setTracks] = useState([]);
+
+  const [artists, setArtists] = useState([]);
+
+  const [playlists, setPlaylists] = useState([]);
+
+  useEffect(()=>{
+    if (!selectedGenre) return;
+
+    /*los fetch
+    fetchSpotifyData (selectedGenre, "tracks", setTracks)
+    fetchSpotifyData (selectedGenre, "artist", setArtists)
+    fetchSpotifyData (selectedGenre, "playlist", setPlaylists)
+    */
+    setTimeout(() => {
+      setTracks(fakeTracks[selectedGenre] || []);
+    setArtists(fakeArtists[selectedGenre] || []);
+    setPlaylists(fakePlaylists[selectedGenre] || []);
+    }, 1000); // 
+  }, [selectedGenre])
+
+  const handleGenreClick = (genreId) => {
+    setSelectedGenre(genreId);
+  };
+
+  const handleBackGenre = () => {
+    setSelectedGenre(null);
+  };
   return (
     <div>
       <h1>Home</h1>
       {/* <Mensaje/> */}
-
       <div className="">
         <div className="Auth border-1">
           <Authorization clientId={clientId} redirectUri={redirectUri} />
@@ -375,9 +437,34 @@ const Genres = () => {
            
           </div>
         
-
+          
+            
       </div>
-    </div>
+  
+          <button onClick={fetchUserProfile}>Perfil</button>
+        
+  
+      <div >
+        {selectedGenre ? 
+             (
+              <>
+              
+              <button onClick={handleBackGenre} className="absoulte">🠔</button>
+                <Section title={`Canciones de ${selectedGenre}`} items={tracks} CardComponent={CardType} />
+                <Section title={`Artistas de ${selectedGenre}`} items={artists} CardComponent={CardType} />
+                <Section title={`Playlists de ${selectedGenre}`} items={playlists} CardComponent={CardType} />
+              </>
+             )
+        
+        : <Section 
+        title="Géneros"
+        items={genres}
+        CardComponent={(props) => <CardGenre {...props} onClick={handleGenreClick} />}
+      />
+      
+      }
+      </div>
+      </div>
   );
 };
 export default Home;

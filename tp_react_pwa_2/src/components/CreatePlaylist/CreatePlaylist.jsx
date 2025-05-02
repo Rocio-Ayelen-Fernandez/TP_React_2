@@ -111,7 +111,7 @@ const CreatePlaylist = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: "Mi Playlist",
+                    name: "Mi Playlist1",
                     description: "Esta es mi playlist",
                     public: false,
                 })

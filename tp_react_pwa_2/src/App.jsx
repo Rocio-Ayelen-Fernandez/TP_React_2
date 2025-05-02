@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import Home from "./pages/Home/Home"
+import Home from './pages/Home/Home'
+import Details from './pages/Details/Details'
+import Favorites from './pages/Favorites/Favorites'
+import { ROUTES } from './const/routes'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+
 import './App.css'
 
 function App() {
@@ -9,7 +13,22 @@ function App() {
 
   return (
     
-    <Home/>
+    <BrowserRouter>
+    
+      <Routes>
+      
+        <Route element={ <Home />} path={ROUTES.home} />
+        <Route element={ <Details />} path={ROUTES.details} />
+        <Route element={ <Favorites />} path={ROUTES.favorites} /> 
+      
+      </Routes>
+
+    
+    </BrowserRouter>
+
+
+    // <Home/>
+
     
   )
 }
