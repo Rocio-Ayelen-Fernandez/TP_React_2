@@ -4,7 +4,7 @@ const search = async (token, q, type) => {
     try {
         const encodedQuery = encodeURIComponent(q); 
 
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodedQuery}&type=${type}}&limit=20`, {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodedQuery}&type=${type}&limit=20`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -25,3 +25,8 @@ const search = async (token, q, type) => {
 
 }
 export default search
+
+
+
+
+

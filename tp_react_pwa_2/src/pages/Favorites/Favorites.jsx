@@ -55,8 +55,8 @@ const Favorites = () => {
   }, [token]);
 
   return (
-    <div className="w-full p-4">
-      <div className="flex flex-row mx-auto">
+    <div className="max-w-full  p-4">
+      <div className="flex flex-row w-xl">
         {/* Lista de favoritos */}
         <div className="mr-10 ml-4">
           <h1 className="text-2xl font-bold mb-4">Mis Favoritos</h1>
