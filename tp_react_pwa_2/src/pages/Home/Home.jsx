@@ -333,18 +333,7 @@ const Genres = () => {
 
 
 
-  // const getUserPlaylist = async () => {
 
-  //   const response = await fetch(`https://api.spotify.com/v1/users/lxc8p8106hk2jzve68p5izobs/playlists`, {
-  //   headers: {
-  //     Authorization: `Bearer ${access_token}`,
-  //   },
-  // })
-  //   .then(res => res.json())
-  //   .then(data => console.log('USER PLAYLISTS:', data));
-  
-  // }
-  // getUserPlaylist()
 
 
   
@@ -403,39 +392,7 @@ const Genres = () => {
         </div>
 
 
-        <div className="fav">
-          <AddToFavorite id={243} type={"track"}/>
-        </div>
 
-
-        <div>
-          <h4>Spotify Track Preview</h4>
-          {access_token ? (
-            <Player id="11dFghVXANMlKmJXsNCbNl" access_token={access_token} />
-          ) : (
-            <p>Loading access token...</p>
-          )}
-        </div>
-
-
-
-          <div className="playlist">
-
-            <CreatePlaylist  />
-
-          </div>
-
-          <div className="list-fav">
-            <h4>Lista de Favoritos</h4>
-            
-            {access_token ? (
-              <ListFavorite access_token={access_token} />
-            ) : (
-              <p>Loading access token...</p>
-            )}
-            
-           
-          </div>
         
           
             
