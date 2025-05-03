@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 
 import './App.css'
+import Login from './pages/Login/Login'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,7 +19,8 @@ function App() {
       <Routes>
       
       <Route path="/" element={<Navigate to={ROUTES.home} />} />
-        <Route element={ <Home />} path={ROUTES.home} />
+        <Route element={ <Login/> } path={ROUTES.login} />
+        <Route element={ <Home/> } path={ROUTES.home} />
         <Route element={ <Details />} path={ROUTES.details} />
         <Route element={ <Favorites />} path={ROUTES.favorites} /> 
       

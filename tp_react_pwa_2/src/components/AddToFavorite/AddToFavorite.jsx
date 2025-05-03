@@ -33,9 +33,9 @@ const AddToFavorite = ({ id, type }) => {
             }
       
             //Si no esta el mismo id en el array de favoritos, lo agrega
-            if (!updatedFavorites[type].includes(id)) {
-              updatedFavorites[type].push(id);
-            }
+            if (!updatedFavorites[type].some((item) => item.id === id)) {
+                updatedFavorites[type].push({ id });
+              }
       
             // Actualiza el localStorage y el estado
             localStorage.setItem("favorite", JSON.stringify(updatedFavorites));

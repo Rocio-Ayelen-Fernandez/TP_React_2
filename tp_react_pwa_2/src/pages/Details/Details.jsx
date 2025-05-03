@@ -12,12 +12,37 @@ const Details = () => {
   const [artist, setArtist] = useState(null);
   const [access_token, setAccessToken] = useState("");
 
-  useEffect(() => {
+  const navigate = useNavigate();
+  const isTokenValid = () => {
     const token = localStorage.getItem("access_token");
-    if (token) {
-      setAccessToken(token);
+    const expiration = localStorage.getItem("token_expiration");
+ 
+    if (!token || !expiration) {
+      return false;
     }
-  }, []);
+  
+    const expirationTime = parseInt(expiration, 10);
+  
+    if (isNaN(expirationTime)) {
+      return false;
+    }
+  
+    if (Date.now() > expirationTime) {
+      return false;
+    }
+    return true;
+  };
+  
+  useEffect(() => {
+    const valid = isTokenValid();
+    if (valid) {
+      setAccessToken(localStorage.getItem("access_token"));
+    } else {
+      navigate("/Login");
+    }
+  }, [navigate]);
+
+
 
   useEffect(() => {
     if (access_token && type === "artist") {
@@ -49,6 +74,7 @@ const Details = () => {
   };
   return (
       <div>
+        <AddToFavorite type={type} id={id}/>
         {type === "artist" && artist && <ArtistHeader artist={artist} />}
       </div>
   );

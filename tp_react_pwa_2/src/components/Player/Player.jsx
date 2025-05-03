@@ -4,6 +4,7 @@ import getTrackById from "../../services/getTrackById";
 const Player = ({ id, access_token }) => {
   const [track, setTrack] = useState(null);
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false); // Estado para controlar la visibilidad
 
   useEffect(() => {
     const fetchTrack = async () => {
@@ -22,11 +23,20 @@ const Player = ({ id, access_token }) => {
     fetchTrack();
   }, [id, access_token]);
 
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible); // Cambiar el estado de visibilidad
+  };
 
   return (
     <div className="container">
+      <button
+        onClick={toggleVisibility}
+        className="bg-blue-500 hover:bg-blue-900 text-white px-4 py-2 rounded-md mb-4"
+      >
+        {isVisible ? "Esconder Reproductor" : "Mostrar Reproductor"}
+      </button>
       <div id="embed-iframe">
-        {track ? (
+        {isVisible && track ? (
           <iframe
             style={{ borderRadius: "12px" }}
             src={`https://open.spotify.com/embed/track/${track.id}`}
@@ -38,7 +48,7 @@ const Player = ({ id, access_token }) => {
             loading="lazy"
           />
         ) : (
-          <p>Loading track...</p>
+          isVisible && <p>Loading track...</p>
         )}
       </div>
     </div>

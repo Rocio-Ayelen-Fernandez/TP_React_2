@@ -21,46 +21,32 @@ const Authorization = ({ clientId, redirectUri }) => {
     const handleAuthorization = async () => {
         const codeVerifier = generateRandomString(128);
         const hashed = await sha256(codeVerifier);
-        const codeChallenge = base64encode(hashed);       
-
+        const codeChallenge = base64encode(hashed);
+      
         const scope = [
-            'ugc-image-upload',
-            'user-read-playback-state',
-            'user-modify-playback-state',
-            'user-read-currently-playing',
-            'streaming',
-            'app-remote-control',
-            'user-read-email',
-            'user-read-private',
-            'playlist-read-collaborative',
-            'playlist-modify-public',
-            'playlist-read-private',
-            'playlist-modify-private',
-            'user-library-modify',
-            'user-library-read',
-            'user-top-read',
-            'user-read-playback-position',
-            'user-read-recently-played',
-            'user-follow-read',
-            'user-follow-modify'
+          'user-read-email',
+          'user-read-private',
+          'playlist-read-private',
+          'playlist-modify-private',
         ].join(' ');
-
+      
         const authUrl = new URL("https://accounts.spotify.com/authorize");
-
+      
         window.localStorage.setItem('code_verifier', codeVerifier);
-
+      
         const params = {
-            response_type: 'code',
-            client_id: clientId,
-            scope,
-            code_challenge_method: 'S256',
-            code_challenge: codeChallenge,
-            redirect_uri: redirectUri,
+          response_type: 'code',
+          client_id: clientId,
+          scope,
+          code_challenge_method: 'S256',
+          code_challenge: codeChallenge,
+          redirect_uri: redirectUri,
         };
-
+      
         authUrl.search = new URLSearchParams(params).toString();
+        console.log("Redirecting to:", authUrl.toString());
         window.location.href = authUrl.toString(); // Redirigir al usuario
-    };
+      };
 
     return (
         <div>

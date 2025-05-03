@@ -2,13 +2,45 @@ import { useEffect, useState } from "react";
 import ListFavorite from "../../components/ListFavorite/ListFavorite";
 import getUserProfile from "../../services/getUserProfile.js";
 import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
+import { useNavigate } from "react-router-dom";
 
 const Favorites = () => {
+  
   const [userProfile, setUserProfile] = useState(null);
-  const [error, setError] = useState(null);
   const [token, setToken] = useState(null);
 
-  // Función para obtener el token desde localStorage
+
+    const navigate = useNavigate();
+    const isTokenValid = () => {
+      const token = localStorage.getItem("access_token");
+      const expiration = localStorage.getItem("token_expiration");
+   
+      if (!token || !expiration) {
+        return false;
+      }
+    
+      const expirationTime = parseInt(expiration, 10);
+    
+      if (isNaN(expirationTime)) {
+        return false;
+      }
+    
+      if (Date.now() > expirationTime) {
+        return false;
+      }
+      return true;
+    };
+    
+    useEffect(() => {
+      const valid = isTokenValid();
+      if (valid) {
+        setToken(localStorage.getItem("access_token"));
+      } else {
+        navigate("/Login");
+      }
+    }, [navigate]);
+  
+
   useEffect(() => {
 
   // localStorage.setItem(
@@ -28,15 +60,8 @@ const Favorites = () => {
   //         ]
   //     })
   // );
-
-
-    const storedToken = localStorage.getItem("access_token");
-    if (!storedToken) {
-      setError("Access token is missing.");
-    } else {
-      setToken(storedToken)
-    }
   }, []);
+
 
   useEffect(() => {
     if (!token) return;
@@ -55,39 +80,50 @@ const Favorites = () => {
   }, [token]);
 
   return (
-    <div className="max-w-full  p-4">
-      <div className="flex flex-row w-xl">
+    <div className="w-full bg-linear-to-b from-gray-900 to-indigo-950">
+      <div className="flex flex-row p-4">
         {/* Lista de favoritos */}
-        <div className="mr-10 ml-4">
-          <h1 className="text-2xl font-bold mb-4">Mis Favoritos</h1>
+        <div className="w-4/5 mr-5 ml-5">
+          <h1 className="text-2xl text-gray-200 font-bold mb-4">Mis Favoritos</h1>
           {token ? (
-            <div>
-              <ListFavorite token={token} />
-            </div>
+            <div
+            className="bg-gradient-to-br from-cyan-950 from-10% via-indigo-900 border-2 border-indigo-700 rounded-md p-4 shadow-xl overflow-x-auto "
+            style={{ maxWidth: "100%", height: "89.2vh" }} 
+          >
+            <ListFavorite token={token} />
+          </div>
           ) : (
-            <p className="text-red-500">Cargando token...</p>
+            <p className="text-rose-500">Cargando token...</p>
           )}
         </div>
 
         {/* Información del usuario */}
-        <div className="mr-4 ml-10">
-          <h1 className="text-2xl font-bold mb-4">Mi Perfil</h1>
+        <div className="w-1/5 mr-5 ml-5">
+          <h1 className="text-2xl text-gray-200 font-bold mb-4">Mi Perfil</h1>
           {userProfile ? (
-            <div>
+            <div className="border-2 border-indigo-700 bg-gradient-to-br from-cyan-950 via-70% via-indigo-900 rounded-md p-4 shadow-md">
               
                 
                   {userProfile.images && userProfile.images[0] && (
                     <div>
                       <img
-                        className="max-w-30 rounded-full"
+                        className="max-w-30 rounded-full shadow-md"
                         src={userProfile.images[0].url}
                         alt="Profile"
                       />
                     </div>
                   )}
-                  <p>
-                    <span className="font-[1000]">Nombre: </span>
+                  <p className="text-gray-200">
+                    <span className=" font-[1000]">Nombre: </span>
                     {userProfile.display_name}
+                  </p>
+                  <p className="text-gray-200">
+                    <span className=" font-[1000]">Pais: </span>
+                    {userProfile.country}
+                  </p>
+                  <p className="text-gray-200">
+                    <span className=" font-[1000]">Seguidores: </span>
+                    {userProfile.followers.total}
                   </p>
 
                   <div className="p-5">
@@ -96,7 +132,10 @@ const Favorites = () => {
               
             </div>
           ) : (
-            <p className="text-red-500">Loading...</p>
+            <div className="flex items-center space-x-2">
+              <p className="text-rose-500">Loading...</p>
+            </div>
+         
           )}
         </div>
       </div>

@@ -166,7 +166,7 @@ const CreatePlaylist = ({token, id}) => {
               className={`px-4 py-2 rounded ${
                   isProcessing || !Array.isArray(tracks.track) || tracks.track.length === 0
                       ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-blue-500 hover:bg-blue-700 text-white'
+                      : 'bg-fuchsia-800 hover:bg-fuchsia-950 rounded-lg text-white'
               }`}
           >
               {isProcessing ? "Procesando..." : "Agregar a Spotify"}
