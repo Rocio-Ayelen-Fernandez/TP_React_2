@@ -325,26 +325,52 @@ const Genres = () => {
         // Mostrar resultados de búsqueda
         <>
           {searchResults.tracks.length > 0 && (
-            <Section
-              title={`Canciones encontradas para "${searchTerm}"`}
-              items={searchResults.tracks}
-              CardComponent={CardType}
-            />
-          )}
-          {searchResults.artists.length > 0 && (
-            <Section
-              title={`Artistas encontrados para "${searchTerm}"`}
-              items={searchResults.artists}
-              CardComponent={CardType}
-            />
-          )}
-          {searchResults.playlists.length > 0 && (
-            <Section
-              title={`Playlists encontradas para "${searchTerm}"`}
-              items={searchResults.playlists}
-              CardComponent={CardType}
-            />
-          )}
+          <Section
+            title={`Canciones encontradas para "${searchTerm}"`}
+            items={searchResults.tracks
+              .filter((track) => track && track.id) // Filtrar elementos nulos o sin id
+              .map((track) => ({
+                id: track.id,
+                name: track.name,
+                artist: track.artists?.map((artist) => artist.name).join(", "),
+                image: track.album?.images?.[0]?.url || "", // Usa la primera imagen del álbum
+                type: "track", // Agregar el tipo
+              }))}
+            CardComponent={CardType}
+          />
+        )}
+
+        {searchResults.artists.length > 0 && (
+          <Section
+            title={`Artistas encontrados para "${searchTerm}"`}
+            items={searchResults.artists
+              .filter((artist) => artist && artist.id) // Filtrar elementos nulos o sin id
+              .map((artist) => ({
+                id: artist.id,
+                name: artist.name,
+                artist: null, // No aplica para artistas
+                image: artist.images?.[0]?.url || "", // Usa la primera imagen del artista
+                type: "artist", // Agregar el tipo
+              }))}
+            CardComponent={CardType}
+          />
+        )}
+
+        {searchResults.playlists.length > 0 && (
+          <Section
+            title={`Playlists encontradas para "${searchTerm}"`}
+            items={searchResults.playlists
+              .filter((playlist) => playlist && playlist.id) // Filtrar elementos nulos o sin id
+              .map((playlist) => ({
+                id: playlist.id,
+                name: playlist.name,
+                artist: playlist.owner?.display_name || "Desconocido", // Usa el nombre del propietario
+                image: playlist.images?.[0]?.url || "", // Usa la primera imagen de la playlist
+                type: "playlist", // Agregar el tipo
+              }))}
+            CardComponent={CardType}
+          />
+        )}
         </>
       ) : selectedGenre ? (
         // Mostrar detalles del género seleccionado
