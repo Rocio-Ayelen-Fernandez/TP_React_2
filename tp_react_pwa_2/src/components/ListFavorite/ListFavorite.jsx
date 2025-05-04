@@ -75,12 +75,12 @@ const ListFavorite = ({token}) => {
             <div className="border-2 border-slate-800 bg-gradient-to-r from-indigo-700 via-200% via-teal-500 shadow-xl rounded-md p-2 mb-2" 
                 key={object.id || index}>
 
-                <div className="flex gap-2 items-center">
+                <div className="md:flex gap-2 items-center">
                 
-                    <div className="w-5/6">
+                    <div className="md:w-5/6">
                     
                         {object.type === "track" && (
-                            <div className="flex gap-5 items-center">
+                            <div className="md:flex gap-5 items-center">
                                 {object.album?.images?.[0]?.url && (
                                     <img 
                                         className="max-w-30 rounded-md h-auto"
@@ -144,7 +144,7 @@ const ListFavorite = ({token}) => {
                         </div>
                         </div>
 
-                        <div className="w-1/6">
+                        <div className="md:w-1/6">
                         
                             <button
                                 className="bg-rose-500 hover:bg-rose-950 text-white font-bold rounded-lg px-4 py-2 mt-2"

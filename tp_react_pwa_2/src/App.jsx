@@ -13,22 +13,22 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-indigo-950">
+    <div className="w-full h-full bg-gradient-to-b from-gray-900 to-indigo-950">
 
-<BrowserRouter>
-    
-    <Routes>
-    
-    <Route path="/" element={<Navigate to={ROUTES.home} />} />
-      <Route element={ <Login/> } path={ROUTES.login} />
-      <Route element={ <Home/> } path={ROUTES.home} />
-      <Route element={ <Details />} path={ROUTES.details} />
-      <Route element={ <Favorites />} path={ROUTES.favorites} /> 
-    
-    </Routes>
+      <BrowserRouter>
+          
+          <Routes>
+          
+          <Route path="/" element={<Navigate to={ROUTES.home} />} />
+            <Route element={ <Login/> } path={ROUTES.login} />
+            <Route element={ <Home/> } path={ROUTES.home} />
+            <Route element={ <Details />} path={ROUTES.details} />
+            <Route element={ <Favorites />} path={ROUTES.favorites} /> 
+          
+          </Routes>
 
-  
-  </BrowserRouter>
+        
+        </BrowserRouter>
 
 
 

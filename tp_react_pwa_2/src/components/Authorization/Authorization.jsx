@@ -49,8 +49,8 @@ const Authorization = ({ clientId, redirectUri }) => {
       };
 
     return (
-        <div>
-            <button onClick={handleAuthorization}>Authorize</button>
+        <div className="px-4 py-2 m-6  bg-fuchsia-800 hover:bg-fuchsia-950 rounded-lg text-white">
+            <button className="font-bold" onClick={handleAuthorization}>Autorizar</button>
         </div>
     );
 };

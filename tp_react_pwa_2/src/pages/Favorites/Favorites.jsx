@@ -80,10 +80,10 @@ const Favorites = () => {
   }, [token]);
 
   return (
-    <div className="w-full bg-linear-to-b">
-      <div className="flex flex-row p-4">
+    <div className="w-full">
+      <div className="md:flex flex-row p-4">
         {/* Lista de favoritos */}
-        <div className="w-4/5 mr-5 ml-5">
+        <div className="md:w-4/5 mr-5 ml-5">
           <h1 className="text-2xl text-gray-200 font-bold mb-4">Mis Favoritos</h1>
           {token ? (
             <div
@@ -98,7 +98,7 @@ const Favorites = () => {
         </div>
 
         {/* Información del usuario */}
-        <div className="w-1/5 mr-5 ml-5">
+        <div className="md:w-1/5 mr-5 ml-5">
           <h1 className="text-2xl text-gray-200 font-bold mb-4">Mi Perfil</h1>
           {userProfile ? (
             <div className="border-2 border-indigo-700 bg-gradient-to-br from-cyan-950 via-70% via-indigo-900 rounded-md p-4 shadow-md">

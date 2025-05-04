@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import Authorization from "../../components/Authorization/Authorization";
+import logo from "../../assets/img/logo.svg";
 
 const Login = () => {
 
@@ -87,9 +88,12 @@ const Login = () => {
 
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Inicia sesión con Spotify</h1>
-      <p className="text-lg">Por favor, autoriza tu cuenta para continuar.</p>
+    <div className="h-screen flex flex-col p-5 items-center justify-center gap-5">
+      <img className="h-40 pulse" src={logo} alt="Lily_logo"/>
+      <div>
+        <h1 className="text-gray-200 text-2xl font-bold mb-4 text-center">Inicia sesión con Spotify</h1>
+        <p className=" text-gray-200 text-lg text-center">Por favor, autoriza tu cuenta para continuar.</p>
+      </div>
       <Authorization clientId={clientId} redirectUri={redirectUri} />
     </div>
   );
