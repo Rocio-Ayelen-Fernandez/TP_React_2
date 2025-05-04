@@ -80,7 +80,7 @@ const Favorites = () => {
   }, [token]);
 
   return (
-    <div className="w-full bg-linear-to-b from-gray-900 to-indigo-950">
+    <div className="w-full bg-linear-to-b">
       <div className="flex flex-row p-4">
         {/* Lista de favoritos */}
         <div className="w-4/5 mr-5 ml-5">

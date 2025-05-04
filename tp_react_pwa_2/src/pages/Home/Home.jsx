@@ -35,7 +35,12 @@ const Home = () => {
   
     const expirationTime = parseInt(expiration, 10);
   
+    const readableExpirationTime = new Date(expirationTime).toLocaleString();
+  console.warn("Expiration time (readable):", readableExpirationTime);
+
+  
     if (isNaN(expirationTime)) {
+   
       return false;
     }
   

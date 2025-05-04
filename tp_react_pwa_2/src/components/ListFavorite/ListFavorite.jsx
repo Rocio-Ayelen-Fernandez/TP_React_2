@@ -2,7 +2,7 @@ import { use, useEffect, useState } from "react";
 import getTrackById from "../../services/getTrackById.js";
 import getAlbumById from "../../services/getAlbumById.js";
 import getPlaylistById from "../../services/getPlaylistById.js";
-import getArtistById from "../../services/getArtistByID.js";
+import getArtistById from "../../services/getArtistById.js";
 import Player from "../../components/Player/Player.jsx";
 
 
