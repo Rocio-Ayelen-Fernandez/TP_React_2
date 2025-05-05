@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const nextLang = i18n.language === 'en' ? 'es' : 'en';

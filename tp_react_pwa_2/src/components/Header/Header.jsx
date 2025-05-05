@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchBar';
-import ListFavorite from '../ListFavorite/ListFavorite';
+import SearchInput from '../SearchInput/SearchInput';
+import search from "../../services/search.js";
+//import ListFavorite from '../ListFavorite/ListFavorite';
 import LanguageSelector from '../LanguageSelector/LanguageSelector';
 import { ROUTES } from '../../const/routes';
 import { House, Heart } from 'lucide-react';
@@ -14,6 +15,10 @@ const Header = () => {
   const showFavorites = path === ROUTES.details;
   const showHomeButton = path === ROUTES.details || path === ROUTES.favorites;
 
+  
+
+
+
   return (
     <header className="flex items-center justify-between px-8 py-3 bg-neutral-900 text-white shadow-md h-24 w-full">
       <div className="flex items-center">
@@ -21,18 +26,18 @@ const Header = () => {
           <House
             onClick={() => navigate(ROUTES.home)}
             size={32}
-            className="text-gray-500 cursor-pointer hover:text-white transition-colors duration-200"
+            className="text-blue cursor-pointer hover:text-white transition-colors duration-200"
           />
         )}
       </div>
 
       <div className="flex-1 flex justify-center">
-        {showSearch && <SearchBar />}
+        {showSearch && <SearchInput />}
         {showFavorites && (
           <div className="relative flex items-center justify-center">
             <Heart className="text-violet-600 mr-2" size={32} />
             <div className="absolute top-1 left-1">
-              <ListFavorite />
+              {/* <ListFavorite /> */}
             </div>
           </div>
         )}

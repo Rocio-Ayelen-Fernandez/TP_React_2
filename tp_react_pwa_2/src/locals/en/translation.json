@@ -2,6 +2,11 @@
     "Genres" : "Genres",
     "Songs": "Songs",
     "Artists": "Artists",
-    "Playlists": "Playlists"
+    "Playlists": "Playlists",
+    "welcome": "Welcome",
+    "home": "Home",
+    "favorites": "My Favorites",
+    "login": "Login",
+    "authorize": "Authorize"
   }
   

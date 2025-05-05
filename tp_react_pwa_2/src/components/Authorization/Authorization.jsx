@@ -32,6 +32,8 @@ const Authorization = ({ clientId, redirectUri }) => {
           'user-read-private',
           'playlist-read-private',
           'playlist-modify-private',
+          'user-follow-modify',
+          'user-follow-read',
         ].join(' ');
       
         const authUrl = new URL("https://accounts.spotify.com/authorize");

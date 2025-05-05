@@ -2,5 +2,10 @@
   "Genres": "Géneros",
   "Songs": "Canciones",
   "Artists": "Artistas",
-  "Playlists": "Listas de reproducción"
+  "Playlists": "Listas de reproducción",
+  "welcome": "Bienvenido",
+    "home": "Inicio",
+    "favorites": "Mis Favoritos",
+    "login": "Iniciar sesión",
+    "authorize": "Autorizar"
 }

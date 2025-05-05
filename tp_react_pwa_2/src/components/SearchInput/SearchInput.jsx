@@ -16,12 +16,8 @@ const SearchInput = ({ onSearch }) => {
             />
             <button onClick={() => onSearch(searchTerm)}>Search</button>
 
-
         </div>
-
     )
-
-
 }
 
 export default SearchInput;

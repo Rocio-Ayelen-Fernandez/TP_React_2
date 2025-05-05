@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Authorization from "../../components/Authorization/Authorization";
 import Section from "../../components/Section/Section";
 import CardGenre from "../../components/CardGenre/CardGenre";
 import CardType from "../../components/CardType/CardType";
 import { genres } from "../../assets/fakeData/genres";
-//import { fakeArtists } from "../../assets/fakeData/fakeArtists";
-//import { fakePlaylists } from "../../assets/fakeData/fakePlaylists";
-//import { fakeTracks } from "../../assets/fakeData/fakeTracks";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import search from "../../services/search.js";
 import { useNavigate } from "react-router-dom";
@@ -190,8 +186,9 @@ const Home = () => {
     }
   };
 
+
   return (
-    <div className="min-h-screen bg-neutral-900 text-white p-6">
+    <div className="min-h-screen text-white p-6">
       <h1>Home</h1>
 
       <SearchInput onSearch={handleSearch} />
