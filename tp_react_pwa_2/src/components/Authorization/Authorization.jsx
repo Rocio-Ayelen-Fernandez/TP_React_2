@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
+
 const Authorization = ({ clientId, redirectUri }) => {
+    const { t } = useTranslation();
     const generateRandomString = (length) => {
         const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const values = crypto.getRandomValues(new Uint8Array(length));
@@ -49,8 +53,8 @@ const Authorization = ({ clientId, redirectUri }) => {
       };
 
     return (
-        <div className="px-4 py-2 m-6  bg-fuchsia-800 hover:bg-fuchsia-950 rounded-lg text-white">
-            <button className="font-bold" onClick={handleAuthorization}>Autorizar</button>
+        <div className="px-4 py-2 m-6  bg-gradient-to-r from-rose-600 to-violet-600 rounded-lg text-white">
+            <button className="font-bold" onClick={handleAuthorization}>{t('authorize')}</button>
         </div>
     );
 };

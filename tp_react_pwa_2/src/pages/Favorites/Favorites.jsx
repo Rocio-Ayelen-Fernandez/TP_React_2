@@ -3,9 +3,10 @@ import ListFavorite from "../../components/ListFavorite/ListFavorite";
 import getUserProfile from "../../services/getUserProfile.js";
 import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Favorites = () => {
-  
+  const { t } = useTranslation();
   const [userProfile, setUserProfile] = useState(null);
   const [token, setToken] = useState(null);
 
@@ -84,7 +85,7 @@ const Favorites = () => {
       <div className="md:flex flex-row p-4">
         {/* Lista de favoritos */}
         <div className="md:w-4/5 mr-5 ml-5">
-          <h1 className="text-2xl text-gray-200 font-bold mb-4">Mis Favoritos</h1>
+          <h1 className="text-2xl text-gray-200 font-bold mb-4">{t('favorites')}</h1>
           {token ? (
             <div
             className="bg-gradient-to-br from-cyan-950 from-10% via-indigo-900 border-2 border-indigo-700 rounded-md p-4 shadow-xl overflow-x-auto "
