@@ -4,6 +4,7 @@ import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header/Header.jsx"
 
 const Details = () => {
   const [searchParams] = useSearchParams();
@@ -64,6 +65,7 @@ const Details = () => {
 
   return (
       <div>
+         <Header variant={"details"}/>
         <AddToFavorite type={type} id={id}/>
         {type === "artist" && <ArtistDetails artistId={id}  />}
       </div>

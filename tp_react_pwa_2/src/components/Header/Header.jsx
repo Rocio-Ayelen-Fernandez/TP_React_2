@@ -1,44 +1,38 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import SearchInput from '../SearchInput/SearchInput';
-import search from "../../services/search.js";
-//import ListFavorite from '../ListFavorite/ListFavorite';
+import AddToFavorite from '../AddToFavorite/AddToFavorite';
 import LanguageSelector from '../LanguageSelector/LanguageSelector';
-import { ROUTES } from '../../const/routes';
-import { House, Heart } from 'lucide-react';
+import { House } from 'lucide-react';
+import Button from '../Button/Button';
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const path = location.pathname;
-
-  const showSearch = path === ROUTES.home;
-  const showFavorites = path === ROUTES.details;
-  const showHomeButton = path === ROUTES.details || path === ROUTES.favorites;
-
-  
-
-
-
+const Header = ({ variant }) => {
+  const isHome = variant === 'home';
+  const isDetails = variant === 'details';
+  const isFavorites = variant === 'favorites';
+const navigate = useNavigate();
   return (
-    <header className="flex items-center justify-between px-8 py-3 bg-neutral-900 text-white shadow-md h-24 w-full">
+<header className="flex items-center m-0 justify-between px-8 py-3 text-white shadow-md h-24 w-full bg-white/3 backdrop-blur-md ">
+      
       <div className="flex items-center">
-        {showHomeButton && (
-          <House
-            onClick={() => navigate(ROUTES.home)}
-            size={32}
-            className="text-blue cursor-pointer hover:text-white transition-colors duration-200"
-          />
+        {(isDetails || isFavorites) && (
+          <Button 
+          onClick={() => navigate("/Home")}
+          className="text-gray-500 cursor-pointer hover:text-white transition-colors duration-200"
+        >
+          <House size={32} color='white' />
+        </Button>
+          
         )}
       </div>
 
       <div className="flex-1 flex justify-center">
-        {showSearch && <SearchInput />}
-        {showFavorites && (
-          <div className="relative flex items-center justify-center">
-            <Heart className="text-violet-600 mr-2" size={32} />
-            <div className="absolute top-1 left-1">
-              {/* <ListFavorite /> */}
-            </div>
+        {isHome && (
+          <SearchInput />
+        )}
+
+        {isDetails && (
+          <div className="flex items-center gap-6">
+            <AddToFavorite id="ejemplo-id" type="juego" />
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import CardType from "../../components/CardType/CardType";
 import { genres } from "../../assets/fakeData/genres";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import search from "../../services/search.js";
+import Header from "../../components/Header/Header.jsx"
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/Button/Button";
@@ -188,8 +189,9 @@ const Home = () => {
 
 
   return (
-    <div className="min-h-screen text-white p-6">
-      <h1>Home</h1>
+    <div className="min-h-screen text-white ">
+       <Header variant={"home"}/>
+      <h1 className="font-semibold">Home</h1>
 
       <SearchInput onSearch={handleSearch} />
 
@@ -257,11 +259,13 @@ const Home = () => {
           <>
             <Button
               onClick={handleBackGenre}
-              className="m-6 inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold rounded transition-colors duration-200 hover:from-purple-700 hover:to-purple-900"
+              className="cursor-pointer px-5 py-2 text-sm font-medium rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:from-purple-500 hover:to-indigo-500 transition"
             >
               <ArrowLeft size={32} className="text-white" />
             </Button>
             <div className="flex flex-col gap-y-24">
+            <h2 className="font-semibold text-center text-4xl">{selectedGenre.toUpperCase()}</h2>
+
               <Section
                 title={t("Songs")}
                 items={tracks.map((item) =>

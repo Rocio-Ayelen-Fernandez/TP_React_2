@@ -4,6 +4,7 @@ import getUserProfile from "../../services/getUserProfile.js";
 import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Header from "../../components/Header/Header.jsx"
 
 const Favorites = () => {
   const { t } = useTranslation();
@@ -82,6 +83,7 @@ const Favorites = () => {
 
   return (
     <div className="w-full">
+      <Header variant={"favorites"}/>
       <div className="md:flex flex-row p-4">
         {/* Lista de favoritos */}
         <div className="md:w-4/5 mr-5 ml-5">
