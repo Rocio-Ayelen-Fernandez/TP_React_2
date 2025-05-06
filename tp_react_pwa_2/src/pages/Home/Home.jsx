@@ -88,7 +88,6 @@ const Home = () => {
     }
   };
 
-  ///////////////// FLORRRRR /////////////////////
 
   const [selectedGenre, setSelectedGenre] = useState();
 
@@ -168,14 +167,13 @@ const Home = () => {
 
 
   return (
-    <div className="min-h-screen text-white ">
+    <div className="text-white ">
        <Header variant="home" onSearch={handleSearch}/>
-      {/* <h1 className="font-semibold">Home</h1> */}
-
+      
       {/* <Mensaje/> */}
       <div className="">
         <div className="Auth border-1"></div>
-
+        <div className="px-4 py-2 min-h-screen">
         {isSearching ? (
           <p className="justify-center text-center pt-4 text-4xl">{t("searching")}</p>
         ) : isSearchActive ? (
@@ -276,9 +274,11 @@ const Home = () => {
           />
         )}
       </div>
+      </div>
       <Footer/>
 
     </div>
+
   );
 };
 export default Home;
