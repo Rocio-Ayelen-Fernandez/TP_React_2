@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/Button/Button";
 import { ArrowLeft } from "lucide-react";
 import fetchSpotifyData from "../../services/fetchSpotifyData.js";
+import Footer from "../../components/Footer/Footer.jsx";
 
 const Home = () => {
   // const [code, setCode] = useState(
@@ -275,6 +276,8 @@ const Home = () => {
           />
         )}
       </div>
+      <Footer/>
+
     </div>
   );
 };

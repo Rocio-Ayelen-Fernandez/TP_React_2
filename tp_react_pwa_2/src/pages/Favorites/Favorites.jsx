@@ -5,6 +5,7 @@ import CreatePlaylist from "../../components/CreatePlaylist/CreatePlaylist";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Header from "../../components/Header/Header.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 
 const Favorites = () => {
   const { t } = useTranslation();
@@ -136,6 +137,7 @@ const Favorites = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

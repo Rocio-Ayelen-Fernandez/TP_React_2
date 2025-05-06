@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header.jsx"
+import Footer from "../../components/Footer/Footer.jsx";
 
 const Details = () => {
   const [searchParams] = useSearchParams();
@@ -74,6 +75,8 @@ const Details = () => {
         {(type === "album" || type === "single" || type === "compilation") && <AlbumDetails albumId={id} />}
         {type === "track" && <TrackDetails trackId={id} />}
         {type === "playlist" && <PlaylistDetails playlistId={id} />}
+        <Footer/>
+
       </div>
   );
 };
