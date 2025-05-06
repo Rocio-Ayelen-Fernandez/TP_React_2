@@ -8,7 +8,7 @@ const NavigateToFavorite = () => {
 
     return (
         <Button
-                className="text-gray-500 cursor-pointer hover:text-white transition-colors duration-200"
+                className="text-gray-300 cursor-pointer hover:text-white hover:brightness-125 transition-all duration-200"
                 onClick={() => navigate("/Favorites")}
                 children={
                   <svg

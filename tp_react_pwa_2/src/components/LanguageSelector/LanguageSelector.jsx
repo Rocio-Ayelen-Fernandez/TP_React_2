@@ -9,7 +9,7 @@ const LanguageSelector = () => {
   return (
     <Button 
       onClick={() => i18n.changeLanguage(nextLang)}
-      className="px-3 py-1 border-3 border-white rounded hover:bg-white hover:text-black transition-colors font-bold"
+      className="px-3 py-1 border-2 border-white rounded hover:bg-white hover:text-black transition-colors font-semi-bold"
     >
       {label}
     </Button>

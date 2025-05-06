@@ -17,7 +17,7 @@ const SearchInput = ({ onSearch }) => {
         <div>
 
             <input 
-                className="border-2 border-white/10 hover:border-white/30 rounded-xl p-2 md:w-xl "
+                className="border-2 border-white/50 hover:border-white/80 rounded-xl p-2 md:w-xl "
                 type="text" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

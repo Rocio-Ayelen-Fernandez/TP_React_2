@@ -1,7 +1,7 @@
 import SearchInput from "../SearchInput/SearchInput";
 import AddToFavorite from "../AddToFavorite/AddToFavorite";
 import LanguageSelector from "../LanguageSelector/LanguageSelector";
-import { House } from "lucide-react";
+import { BsHouseDoor } from "react-icons/bs";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -24,7 +24,7 @@ const Header = ({ variant, onSearch }) => {
             onClick={() => navigate("/Home")}
             className="text-gray-500 cursor-pointer hover:text-white transition-colors duration-200"
           >
-            <House size={32} color="white" />
+            <BsHouseDoor className="text-4xl text-white" />
           </Button>
         )}
       </div>
