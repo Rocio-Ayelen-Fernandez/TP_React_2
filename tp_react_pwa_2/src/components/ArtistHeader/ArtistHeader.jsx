@@ -1,53 +1,96 @@
+import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
+import TrackList from "../TrackList/TrackList";
 
-const ArtistHeader = ({ artist, onFollowToggle, isFollowing, backImage }) => {
-    const { t } = useTranslation();
+const ArtistHeader = ({ artist, topTracks, onFollowToggle, isFollowing, collaborations = [] }) => {
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("top");
+  const [showAllTracks, setShowAllTracks] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-    if (!artist) return null;
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const renderTracks = (tracks = []) => {
+    if (!Array.isArray(tracks)) return null;
+
+    const visibleTracks = showAllTracks ? tracks : tracks.slice(0, 5);
 
     return (
-        <div className="relative w-full h-[400px] sm:h-[500px] md:h-[300px] overflow-hidden rounded-b-3xl shadow-xl">
-            <div className="absolute inset-0 z-0">
-                <img
-                    src={artist.images[0]?.url}
-                    alt={artist.name}
-                    className="w-full h-full object-cover blur-sm scale-105 opacity-60"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-purple-800/40 to-indigo-900/70 mix-blend-multiply" />
-            </div>
-
-            <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 sm:px-6 md:px-8 py-6 text-white space-y-4">
-                <div className="backdrop-blur-none sm:backdrop-blur-md bg-none md:bg-white/5 px-4 sm:px-6 py-4 md:rounded-xl md:border md:border-white/10 md:shadow-inner sm:shadow-none w-full max-w-4xl flex flex-col md:flex-row items-center md:items-start gap-6">
-                    <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 overflow-hidden rounded mx-auto md:mx-0">
-                        <img
-                            src={artist.images[0]?.url}
-                            alt=""
-                            className="w-full h-full object-cover scale-125"
-                        />
-                    </div>
-                    <div className="flex flex-col justify-center items-center md:items-start text-left md:text-left">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight drop-shadow-lg">
-                            {artist.name}
-                        </h1>
-                        <p className="mt-2 text-sm sm:text-base text-white/80 drop-shadow-sm">
-                            {t("Seguidores")}: {artist.followers.total.toLocaleString()}
-                        </p>
-                        <Button
-                            onClick={onFollowToggle}
-                            className={`cursor-pointer px-6 py-2 rounded-full font-medium shadow-lg transition-transform duration-300 transform hover:scale-105 focus:outline-none text-sm sm:text-base ${
-                                isFollowing
-                                    ? "bg-gradient-to-l from-pink-400 to-violet-600 hover:from-red-500 hover:to-pink-500"
-                                    : "bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500"
-                            }`}
-                        >
-                            {isFollowing ? t("Dejar de Seguir") : t("Seguir")}
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div>
+        <TrackList tracks={visibleTracks} type="artist" />
+        {tracks.length > 5 && (
+          <button
+            onClick={() => setShowAllTracks(!showAllTracks)}
+            className="mt-2 text-sm text-violet-400 hover:underline focus:outline-none"
+          >
+            {showAllTracks ? t("Mostrar menos") : t("Mostrar más")}
+          </button>
+        )}
+      </div>
     );
+  };
+
+  if (!artist) return null;
+
+  return (
+    <div className="relative w-full rounded-b-3xl overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-6 py-8 text-white relative z-10">
+        <div className="flex flex-col items-center md:justify-start md:col-span-1">
+          <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-xl overflow-hidden shadow-md border border-white/20 mb-2">
+            <img src={artist.images[0]?.url} alt={artist.name} className="w-full h-full object-cover" />
+          </div>        
+          <div className="flex flex-col items-center md:items-center text-center md:text-left col-span-1">
+          <h1 className="text-4xl font-extrabold">{artist.name}</h1>
+          <p className="mt-2 text-white/70 text-sm">{t("Seguidores")}: {artist.followers.total.toLocaleString()}</p>
+          <Button
+            onClick={onFollowToggle}
+            className={`mt-4 px-6 py-2 rounded-full font-medium shadow-lg text-sm transition-all ${
+              isFollowing
+                ? "bg-gradient-to-l from-pink-500 to-violet-600 hover:from-red-500 hover:to-pink-500"
+                : "bg-gradient-to-r from-green-500 to-violet-600 hover:from-green-400 hover:to-purple-500"
+            }`}
+          >
+            {isFollowing ? t("Dejar de Seguir") : t("Seguir")}
+          </Button>
+        </div>
+        </div>
+        <div className="bg-white/5 rounded-2xl p-4 border border-white/10 shadow-md md:col-span-3">
+          <nav className="flex justify-center md:justify-start space-x-3 mb-4">
+            <button
+              onClick={() => setActiveTab("top")}
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                activeTab === "top"
+                  ? "bg-violet-600 text-white"
+                  : "bg-white/10 text-white/70 hover:text-white hover:bg-white/20"
+              }`}
+            >
+              {t("Top Tracks")}
+            </button>
+            <button
+              onClick={() => setActiveTab("collabs")}
+              className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                activeTab === "collabs"
+                  ? "bg-violet-600 text-white"
+                  : "bg-white/10 text-white/70 hover:text-white hover:bg-white/20"
+              }`}
+            >
+              {t("Colaboraciones")}
+            </button>
+          </nav>
+
+          <div className="transition-all duration-300 ease-in-out max-h-[400px] overflow-y-auto pr-1 custom-scrollbar">
+            {activeTab === "top" ? renderTracks(topTracks) : renderTracks(collaborations)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ArtistHeader;

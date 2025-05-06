@@ -193,7 +193,6 @@ const Home = () => {
 
       <SearchInput onSearch={handleSearch} />
 
-      {/* <Mensaje/> */}
       <div className="">
         <div className="Auth border-1"></div>
 

@@ -10,7 +10,7 @@ const getPlaylistById = async (access_token, id) => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json(); // Obtener detalles del error
+            const errorData = await response.json();
             console.error("Error response from Spotify API:", errorData);
             throw new Error(`Error fetching playlist data: ${response.status} ${response.statusText}`);
         }

@@ -1,5 +1,8 @@
 import { ROUTES } from "../../const/routes.js";
 import ArtistDetails from '../../components/ArtistDetails/ArtistDetails';
+import AlbumDetails from '../../components/AlbumDetails/AlbumDetails.jsx'
+import TrackDetails from "../../components/TrackDetails/TrackDetails.jsx";
+import PlaylistDetails from "../../components/PlaylistDetails/PlaylistDetails.jsx";
 import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -10,7 +13,7 @@ const Details = () => {
   const type = searchParams.get("type");
   const id = searchParams.get("id");
 
-  const [artist, setArtist] = useState(null);
+
   const [access_token, setAccessToken] = useState("");
 
   const navigate = useNavigate();
@@ -43,29 +46,13 @@ const Details = () => {
     }
   }, [navigate]);
 
-
-
-  // useEffect(() => {
-  //   if (access_token && type === "artist") {
-  //     getArtistById();
-  //   }
-  // }, [access_token, type]);
-
-  // useEffect(() => {
-  //   if (!access_token || !type || !id) return;
-
-  //   if (type === "artist") {
-  //     getArtistById(id);
-  //   } else if (type === "album") {
-  //     getAlbumById(id);
-  //   }
-  // }, [access_token, type, id]);
-
-
   return (
       <div>
-        <AddToFavorite type={type} id={id}/>
-        {type === "artist" && <ArtistDetails artistId={id}  />}
+        {/* <AddToFavorite type={type} id={id}/> */}
+        {type === "artist" && <ArtistDetails artistId={id} />}
+        {(type === "album" || type === "single" || type === "compilation") && <AlbumDetails albumId={id} />}
+        {type === "track" && <TrackDetails trackId={id} />}
+        {type === "playlist" && <PlaylistDetails playlistId={id} />}
       </div>
   );
 };
