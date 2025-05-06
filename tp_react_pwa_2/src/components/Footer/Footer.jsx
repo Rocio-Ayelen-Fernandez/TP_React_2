@@ -7,10 +7,10 @@ const Footer = () =>{
           <div className="flex flex-col text-sm space-y-2  items-start ">
             <span className="font-semibold text-white ">Perfiles de Github</span>
             <a href="https://github.com/Rocio-Ayelen-Fernandez" target="_blank" className="flex items-center gap-x-1 transition-transform hover:scale-105 hover:brightness-125">
-            <FaGithub />brisa-celayes
+            <FaGithub />rocio-fernandez
             </a>
             <a href="https://github.com/briabril" target="_blank"  className="flex items-center gap-x-1 transition-transform hover:scale-105 hover:brightness-125">
-            <FaGithub />rocío-fernandez
+            <FaGithub />brisa-celayes
             </a>
             <a href="https://github.com/FlorenciaRusso9606" target="_blank"  className="flex items-center gap-x-1 transition-transform hover:scale-105 hover:brightness-125">
             <FaGithub />florencia-russo
