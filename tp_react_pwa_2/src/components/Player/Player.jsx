@@ -1,45 +1,66 @@
 import { useEffect, useState } from "react";
 import getTrackById from "../../services/getTrackById";
+import { useTranslation } from "react-i18next";
+import getAlbumById from "../../services/getAlbumById";
+import getPlaylistById from "../../services/getPlaylistById";
 
-const Player = ({ id, access_token }) => {
-  const [track, setTrack] = useState(null);
+const Player = ({ id, access_token, type }) => {
+  const { t } = useTranslation();
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(false); // Estado para controlar la visibilidad
+  const fetchFunctions = {
+    track: getTrackById,
+    album: getAlbumById,
+    playlist: getPlaylistById,
+  };
 
   useEffect(() => {
-    const fetchTrack = async () => {
-      if (id && access_token) {
+    const fetchData = async () => {
+      if (id && access_token && type) {
+        const fetchFunction = fetchFunctions[type];
+        if (!fetchFunction) {
+          setError("Invalid type provided");
+          return;
+        }
+
         try {
-          const trackData = await getTrackById(access_token, id);
-          setTrack(trackData);
-          setError(null); // Limpiar errores previos
+          const fetchedData = await fetchFunction(access_token, id);
+          setData(fetchedData);
+          setError(null);
         } catch (err) {
-          console.error("Error in Player component:", err.message);
-          setError("Failed to load track. Please try again.");
+          console.error(`Error in Player component (${type}):`, err.message);
+          setError("Failed to load data");
         }
       }
     };
 
-    fetchTrack();
-  }, [id, access_token]);
+    fetchData();
+  }, [id, access_token, type]);
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible); // Cambiar el estado de visibilidad
+  
+  const getEmbedUrl = () => {
+    if (!data || !type) return null;
+
+    switch (type) {
+      case "track":
+        return `https://open.spotify.com/embed/track/${data.id}`;
+      case "album":
+        return `https://open.spotify.com/embed/album/${data.id}`;
+      case "playlist":
+        return `https://open.spotify.com/embed/playlist/${data.id}`;
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="container">
-      <button
-        onClick={toggleVisibility}
-        className="bg-blue-500 hover:bg-blue-900 text-white px-4 py-2 rounded-md mb-4"
-      >
-        {isVisible ? "Esconder Reproductor" : "Mostrar Reproductor"}
-      </button>
-      <div id="embed-iframe">
-        {isVisible && track ? (
+    <div className="flex flex-col justify-center md:justify-end text-white">
+      
+      <div id="embed-iframe" className="mt-2">
+        {data ? (
           <iframe
             style={{ borderRadius: "12px" }}
-            src={`https://open.spotify.com/embed/track/${track.id}`}
+            src={getEmbedUrl()}
             width="100%"
             height="152"
             frameBorder="0"
@@ -48,7 +69,7 @@ const Player = ({ id, access_token }) => {
             loading="lazy"
           />
         ) : (
-          isVisible && <p>Loading track...</p>
+          <p>{t("loading")}</p>
         )}
       </div>
     </div>

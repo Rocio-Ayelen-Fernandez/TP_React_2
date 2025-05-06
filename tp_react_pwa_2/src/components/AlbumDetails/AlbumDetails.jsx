@@ -14,9 +14,12 @@ const AlbumDetails = ({ albumId }) => {
   useEffect(() => {
     if (access_token && albumId) {
       const fetchAlbum = async () => {
-        const res = await fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
-          headers: { Authorization: `Bearer ${access_token}` },
-        });
+        const res = await fetch(
+          `https://api.spotify.com/v1/albums/${albumId}`,
+          {
+            headers: { Authorization: `Bearer ${access_token}` },
+          }
+        );
         const data = await res.json();
         setAlbum(data);
         getAlbumTracksByAlbumId(albumId);
@@ -27,11 +30,14 @@ const AlbumDetails = ({ albumId }) => {
 
   const getAlbumTracksByAlbumId = async (id) => {
     try {
-      const res = await fetch(`https://api.spotify.com/v1/albums/${id}/tracks`, {
-        headers: { Authorization: `Bearer ${access_token}` },
-      });
+      const res = await fetch(
+        `https://api.spotify.com/v1/albums/${id}/tracks`,
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        }
+      );
       const data = await res.json();
-      console.log(data.items)
+      console.log(data.items);
       setAlbumTracks(data.items);
     } catch (err) {
       console.error("Error al obtener las canciones", err);
@@ -72,14 +78,18 @@ const AlbumDetails = ({ albumId }) => {
                 {album.name}
               </h1>
               <p className="text-white/80 mb-1">
-                <span className="font-semibold">Artista:</span> {album.artists.map((a) => a.name).join(", ")}
+                <span className="font-semibold">Artista:</span>{" "}
+                {album.artists.map((a) => a.name).join(", ")}
               </p>
               <p className="text-white/80">
-                <span className="font-semibold">Lanzado:</span> {album.release_date}
+                <span className="font-semibold">Lanzado:</span>{" "}
+                {album.release_date}
               </p>
             </div>
             <div className="flex-1">
-              <h2 className="text-2xl font-semibold text-white mb-4">Canciones</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Canciones
+              </h2>
               <div className="bg-white/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
                 <TrackList tracks={albumTracks} />
               </div>

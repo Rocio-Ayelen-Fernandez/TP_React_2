@@ -7,5 +7,17 @@
     "home": "Inicio",
     "favorites": "Mis Favoritos",
     "login": "Iniciar sesión",
-    "authorize": "Autorizar"
+    "authorize": "Autorizar",
+     "search": "Buscar",
+     "searching": "Buscando...",
+    "myprofile": "Mi Perfil",
+    "country": "Pais",
+    "followers": "Seguidores",
+    "loading": "Cargando...",
+    "remove": "Eliminar",
+    "Hide_Player": "Esconder Reproductor",
+    "Show_Player": "Mostrar Reproductor",
+    "creating_playlist": "Creando lista de reproducción...",
+    "updating_playlist": "Actualizando lista de reproducción...",
+    "successfully_added_tracks": "Canciones añadidas a la lista de reproducción con éxito!"
 }

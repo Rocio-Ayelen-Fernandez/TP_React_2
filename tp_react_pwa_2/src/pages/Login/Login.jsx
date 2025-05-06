@@ -7,7 +7,7 @@ const Login = () => {
 
     
   const clientId = "5c271aa13f7641f8b283fae8ab5c8f70";
-  const redirectUri = "http://127.0.0.1:5173/login";
+  const redirectUri = window.location.origin + "/login";
       
   const navigate = useNavigate();
 

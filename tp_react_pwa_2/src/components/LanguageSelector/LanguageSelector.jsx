@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-
+import Button from '../Button/Button';
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
@@ -7,12 +7,12 @@ const LanguageSelector = () => {
   const label = i18n.language === 'en' ? 'ES' : 'EN';
 
   return (
-    <button
+    <Button 
       onClick={() => i18n.changeLanguage(nextLang)}
-      className="px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition-colors"
+      className="px-3 py-1 border-2 border-white rounded hover:bg-white hover:text-black transition-colors font-semi-bold"
     >
       {label}
-    </button>
+    </Button>
   );
 };
 

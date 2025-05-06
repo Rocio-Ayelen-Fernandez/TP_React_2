@@ -5,11 +5,13 @@ import CardType from "../../components/CardType/CardType";
 import { genres } from "../../assets/fakeData/genres";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import search from "../../services/search.js";
+import Header from "../../components/Header/Header.jsx"
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/Button/Button";
 import { ArrowLeft } from "lucide-react";
 import fetchSpotifyData from "../../services/fetchSpotifyData.js";
+import Footer from "../../components/Footer/Footer.jsx";
 
 const Home = () => {
   // const [code, setCode] = useState(
@@ -86,30 +88,7 @@ const Home = () => {
     }
   };
 
-  ///////////////// FLORRRRR /////////////////////
 
-  // const fetchSpotifyData = async (genre, type) => {
-  //   const baseURL = "https://api.spotify.com/v1/search";
-
-  //   let query = type === "playlist"
-  //     ? genre  // para playlist no se usa el filtro genre:
-  //     : `genre:${genre}`; // para tracks y artists sí
-
-  //   try {
-  //     const res = await fetch(`${baseURL}?q=${encodeURIComponent(query)}&type=${type}&limit=15`, {
-  //       headers: {
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //     });
-
-  //   const data = await res.json();
-  //     const items = data[type + "s"]?.items || [];
-  //     const filteredItems = items.filter(item => item !== null);
-  //     return filteredItems;
-  //   } catch (error) {
-  //     console.error(`Error fetching ${type}s:`, error);
-  //       }
-  // };
   const [selectedGenre, setSelectedGenre] = useState();
 
   const [tracks, setTracks] = useState([]);
@@ -188,16 +167,23 @@ const Home = () => {
 
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen text-white p-6">
       <h1>Home</h1>
 
       <SearchInput onSearch={handleSearch} />
 
+=======
+    <div className="text-white ">
+       <Header variant="home" onSearch={handleSearch}/>
+      
+      {/* <Mensaje/> */}
+>>>>>>> main
       <div className="">
         <div className="Auth border-1"></div>
-
+        <div className="px-4 py-2 min-h-screen">
         {isSearching ? (
-          <p>Buscando...</p>
+          <p className="justify-center text-center pt-4 text-4xl">{t("searching")}</p>
         ) : isSearchActive ? (
           // Mostrar resultados de búsqueda
           <>
@@ -256,11 +242,13 @@ const Home = () => {
           <>
             <Button
               onClick={handleBackGenre}
-              className="m-6 inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold rounded transition-colors duration-200 hover:from-purple-700 hover:to-purple-900"
+              className="cursor-pointer px-5 py-2 text-sm font-medium rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:from-purple-500 hover:to-indigo-500 transition"
             >
               <ArrowLeft size={32} className="text-white" />
             </Button>
             <div className="flex flex-col gap-y-24">
+            <h2 className="font-semibold text-center text-4xl">{selectedGenre.toUpperCase()}</h2>
+
               <Section
                 title={t("Songs")}
                 items={tracks.map((item) =>
@@ -294,7 +282,11 @@ const Home = () => {
           />
         )}
       </div>
+      </div>
+      <Footer/>
+
     </div>
+
   );
 };
 export default Home;
