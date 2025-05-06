@@ -2,9 +2,9 @@ const CardGenre = ({ name, image, id, icon, onClick }) => {
   return (
     <div
       onClick={() => onClick(id)}
-      className="group mb-6 p-4 rounded-2xl bg-white/10 backdrop-blur-xl shadow-md hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300 ease-in-out cursor-pointer w-full sm:w-48 text-white border border-white/10 hover:border-white/30 flex flex-row sm:flex-col items-center sm:items-stretch"
+      className="group mb-6 p-4 rounded-2xl bg-white/10 backdrop-blur-xl shadow-md hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300 ease-in-out cursor-pointer text-white border border-white/10 hover:border-white/30 w-48 "
     >
-      <div className="relative w-20 h-20 sm:w-full sm:h-48 flex-shrink-0">
+      <div className="relative ">
         <img
           src={image}
           alt={name}
