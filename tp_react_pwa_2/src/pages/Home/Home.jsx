@@ -89,28 +89,6 @@ const Home = () => {
 
   ///////////////// FLORRRRR /////////////////////
 
-  // const fetchSpotifyData = async (genre, type) => {
-  //   const baseURL = "https://api.spotify.com/v1/search";
-
-  //   let query = type === "playlist"
-  //     ? genre  // para playlist no se usa el filtro genre:
-  //     : `genre:${genre}`; // para tracks y artists sí
-
-  //   try {
-  //     const res = await fetch(`${baseURL}?q=${encodeURIComponent(query)}&type=${type}&limit=15`, {
-  //       headers: {
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //     });
-
-  //   const data = await res.json();
-  //     const items = data[type + "s"]?.items || [];
-  //     const filteredItems = items.filter(item => item !== null);
-  //     return filteredItems;
-  //   } catch (error) {
-  //     console.error(`Error fetching ${type}s:`, error);
-  //       }
-  // };
   const [selectedGenre, setSelectedGenre] = useState();
 
   const [tracks, setTracks] = useState([]);
@@ -190,17 +168,15 @@ const Home = () => {
 
   return (
     <div className="min-h-screen text-white ">
-       <Header variant={"home"}/>
-      <h1 className="font-semibold">Home</h1>
-
-      <SearchInput onSearch={handleSearch} />
+       <Header variant="home" onSearch={handleSearch}/>
+      {/* <h1 className="font-semibold">Home</h1> */}
 
       {/* <Mensaje/> */}
       <div className="">
         <div className="Auth border-1"></div>
 
         {isSearching ? (
-          <p>Buscando...</p>
+          <p className="justify-center text-center pt-4 text-4xl">{t("searching")}</p>
         ) : isSearchActive ? (
           // Mostrar resultados de búsqueda
           <>

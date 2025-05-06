@@ -1,6 +1,9 @@
 import { ROUTES } from "../../const/routes.js";
 import ArtistDetails from '../../components/ArtistDetails/ArtistDetails';
+import AlbumDetails from '../../components/AlbumDetails/AlbumDetails'
 import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
+import TrackDetails from "../../components/TrackDetails/TrackDetails.jsx";
+import PlaylistDetails from "../../components/PlaylistDetails/PlaylistDetails.jsx";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -66,8 +69,11 @@ const Details = () => {
   return (
       <div>
          <Header variant={"details"}/>
-        <AddToFavorite type={type} id={id}/>
-        {type === "artist" && <ArtistDetails artistId={id}  />}
+        {/* <AddToFavorite type={type} id={id}/> */}
+        {type === "artist" && <ArtistDetails artistId={id} />}
+        {(type === "album" || type === "single" || type === "compilation") && <AlbumDetails albumId={id} />}
+        {type === "track" && <TrackDetails trackId={id} />}
+        {type === "playlist" && <PlaylistDetails playlistId={id} />}
       </div>
   );
 };

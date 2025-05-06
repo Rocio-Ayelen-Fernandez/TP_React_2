@@ -7,6 +7,18 @@
     "home": "Home",
     "favorites": "My Favorites",
     "login": "Login",
-    "authorize": "Authorize"
+    "authorize": "Authorize",
+    "search": "Search",
+    "searching": "Searching...",
+    "myprofile": "My Profile",
+    "country": "Country",
+    "followers": "Followers",
+    "loading": "Loading...",
+    "remove": "Remove",
+    "Hide_Player": "Hide Player",
+    "Show_Player": "Show Player",
+    "creating_playlist": "Creating playlist...",
+    "updating_playlist": "Updating playlist...",
+    "successfully_added_tracks": "Successfully added tracks to playlist!"
   }
   
