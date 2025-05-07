@@ -23,6 +23,7 @@ const ArtistDetails = ({ artistId }) => {
     if (!accessToken || !artistId) return;
 
     const fetchData = async () => {
+      console.log("Fetching artist data...");
       try {
         const artistData = await getArtistById(accessToken, artistId);
         setArtist(artistData);

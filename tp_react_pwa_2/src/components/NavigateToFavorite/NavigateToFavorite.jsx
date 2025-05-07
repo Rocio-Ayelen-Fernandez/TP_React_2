@@ -24,8 +24,8 @@ const NavigateToFavorite = () => {
                       x2="28"
                       y2="18"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
                     <line
                       x1="8"
@@ -33,8 +33,8 @@ const NavigateToFavorite = () => {
                       x2="28"
                       y2="26"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
                     <line
                       x1="8"
@@ -42,8 +42,8 @@ const NavigateToFavorite = () => {
                       x2="22"
                       y2="34"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
 
                     <ellipse
@@ -52,7 +52,7 @@ const NavigateToFavorite = () => {
                       rx="6"
                       ry="4"
                       stroke="white"
-                      stroke-width="2"
+                      strokeWidth="2"
                       fill="none"
                     />
                     <line
@@ -61,15 +61,15 @@ const NavigateToFavorite = () => {
                       x2="42"
                       y2="20"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
                     <path
                       d="M42 20 L52 17 V23 L42 26 Z"
                       fill="none"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 }

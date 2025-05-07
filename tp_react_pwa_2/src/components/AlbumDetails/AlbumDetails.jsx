@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import TrackList from "../TrackList/TrackList";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const AlbumDetails = ({ albumId }) => {
   const [album, setAlbum] = useState(null);
   const [albumTracks, setAlbumTracks] = useState([]);
   const [access_token, setAccessToken] = useState("");
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -37,7 +42,6 @@ const AlbumDetails = ({ albumId }) => {
         }
       );
       const data = await res.json();
-      console.log(data.items);
       setAlbumTracks(data.items);
     } catch (err) {
       console.error("Error al obtener las canciones", err);
@@ -58,7 +62,7 @@ const AlbumDetails = ({ albumId }) => {
           </>
         ) : (
           <div className="w-full h-80 bg-gradient-to-br from-black/70 via-purple-800/40 to-indigo-900/70 flex items-center justify-center">
-            <p className="text-white text-lg">Cargando álbum...</p>
+            <p className="text-white text-lg">{t("loading")}</p>
           </div>
         )}
       </div>
@@ -66,7 +70,7 @@ const AlbumDetails = ({ albumId }) => {
       <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10 text-white">
         {album && (
           <div className="backdrop-blur-md bg-white/5 px-6 py-6 rounded-xl border border-white/10 shadow-inner w-full flex flex-col md:flex-row items-center gap-6">
-            <div className="flex flex-col items-center md:items-center md:w-1/4 ">
+            <div className="flex flex-col items-center md:items-center md:w-1/4">
               <div className="w-48 h-48 rounded-lg overflow-hidden shadow-lg mb-4">
                 <img
                   src={album.images[0]?.url}
@@ -77,18 +81,32 @@ const AlbumDetails = ({ albumId }) => {
               <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 text-center md:text-left">
                 {album.name}
               </h1>
-              <p className="text-white/80 mb-1">
-                <span className="font-semibold">Artista:</span>{" "}
-                {album.artists.map((a) => a.name).join(", ")}
+              <p>
+                {t("artist")}:
+                <span className="ml-1">
+                  {album.artists.map((artist, index) => (
+                    <span key={artist.id}>
+                      <span
+                        className="hover:underline cursor-pointer text-blue-300"
+                        onClick={() =>
+                          navigate(`/Details?type=artist&id=${artist.id}`)
+                        }
+                      >
+                        {artist.name}
+                      </span>
+                      {index < album.artists.length - 1 && ", "}
+                    </span>
+                  ))}
+                </span>
               </p>
               <p className="text-white/80">
-                <span className="font-semibold">Lanzado:</span>{" "}
+                <span className="font-semibold">{t("released")}:</span>{" "}
                 {album.release_date}
               </p>
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-semibold text-white mb-4">
-                Canciones
+                {t("songs")}
               </h2>
               <div className="bg-white/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
                 <TrackList tracks={albumTracks} />

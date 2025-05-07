@@ -17,7 +17,7 @@ const Header = ({ variant, onSearch }) => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex items-center m-0 justify-between px-8 py-3 text-white shadow-md h-24 w-full bg-white/3 backdrop-blur-md sticky top-0 z-10 ">
+    <header className="flex items-center m-0 justify-between px-8 py-3 text-white shadow-md h-24 w-full bg-white/3 backdrop-blur-md sticky top-0 z-99 ">
       <div className="flex items-center">
         {(isDetails || isFavorites) && (
           <Button
