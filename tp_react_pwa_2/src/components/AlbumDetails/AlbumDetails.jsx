@@ -1,48 +1,46 @@
 import { useEffect, useState } from "react";
 import TrackList from "../TrackList/TrackList";
+import useCachedFetch from "../../services/useCachedFetch";
+import getAlbumById from "../../services/getAlbumById";
 
 const AlbumDetails = ({ albumId }) => {
+  const { fetchData, isLoading, getCachedData } = useCachedFetch();
   const [album, setAlbum] = useState(null);
   const [albumTracks, setAlbumTracks] = useState([]);
-  const [access_token, setAccessToken] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) setAccessToken(token);
-  }, []);
+    const fetchAlbumDetails = async () => {
+      try {
+        const albumData = await fetchData("album", albumId, async () => {
+          const album = await getAlbumById(localStorage.getItem("access_token"), albumId);
 
-  useEffect(() => {
-    if (access_token && albumId) {
-      const fetchAlbum = async () => {
-        const res = await fetch(
-          `https://api.spotify.com/v1/albums/${albumId}`,
-          {
-            headers: { Authorization: `Bearer ${access_token}` },
-          }
-        );
-        const data = await res.json();
-        setAlbum(data);
-        getAlbumTracksByAlbumId(albumId);
-      };
-      fetchAlbum();
-    }
-  }, [access_token, albumId]);
+          const cachedTracks = getCachedData("tracks", albumId);
+          const tracks = cachedTracks || (await fetch(`https://api.spotify.com/v1/albums/${albumId}/tracks`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }).then((res) => res.json()).then((data) => data.items || []));
 
-  const getAlbumTracksByAlbumId = async (id) => {
-    try {
-      const res = await fetch(
-        `https://api.spotify.com/v1/albums/${id}/tracks`,
-        {
-          headers: { Authorization: `Bearer ${access_token}` },
-        }
-      );
-      const data = await res.json();
-      console.log(data.items);
-      setAlbumTracks(data.items);
-    } catch (err) {
-      console.error("Error al obtener las canciones", err);
-    }
-  };
+          return { ...album, tracks };
+        });
+
+        setAlbum(albumData);
+        setAlbumTracks(albumData.tracks || []);
+      } catch (error) {
+        console.error("Error fetching album details:", error.message);
+      }
+    };
+
+    fetchAlbumDetails();
+  }, [albumId, fetchData, getCachedData]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-80 bg-gradient-to-br from-black/70 via-purple-800/40 to-indigo-900/70 flex items-center justify-center">
+        <p className="text-white text-lg">Cargando álbum...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full overflow-hidden shadow-xl">

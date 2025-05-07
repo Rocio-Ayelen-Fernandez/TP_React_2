@@ -1,57 +1,66 @@
 import { useEffect, useState } from "react";
+import TrackList from "../../components/TrackList/TrackList";
+import useCachedFetch from "../../services/useCachedFetch";
 import getPlaylistById from "../../services/getPlaylistById";
-import TrackList from "../../components/TrackList/TrackList"; 
 
 const PlaylistDetails = ({ playlistId }) => {
-    const [access_token, setAccessToken] = useState("");
-    const [playlist, setPlaylist] = useState(null);
+  const { fetchData, isLoading, getCachedData } = useCachedFetch();
+  const [playlist, setPlaylist] = useState(null);
 
-    useEffect(() => {
-        const token = localStorage.getItem("access_token");
-        if (token) {
-            setAccessToken(token);
-        }
-    }, []);
+  useEffect(() => {
+    const fetchPlaylistDetails = async () => {
+      try {
+        const playlistData = await fetchData("playlist", playlistId, async () => {
+          const playlist = await getPlaylistById(localStorage.getItem("access_token"), playlistId);
 
-    useEffect(() => {
-        if (access_token && playlistId) {
-            const fetchPlaylist = async () => {
-                try {
-                    const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-                        headers: { Authorization: `Bearer ${access_token}` },
-                    });
-                    const data = await res.json();
-                    setPlaylist(data);
-                } catch (error) {
-                    console.error("Error fetching playlist:", error);
-                }
-            };
-            fetchPlaylist();
-        }
-    }, [access_token, playlistId]);
+          const cachedTracks = getCachedData("tracks", playlistId);
+          const tracks = cachedTracks || playlist.tracks.items.map((item) => item.track);
 
-    if (!playlist) {
-        return <div className="text-white text-center mt-10">Cargando playlist...</div>;
-    }
+          return { ...playlist, tracks };
+        });
 
-    return (
-        <div className="text-white p-6">
-            <div className="flex items-center gap-6 mb-8">
-                {playlist.images[0] && (
-                    <img src={playlist.images[0].url} alt="Playlist Cover" className="w-44 h-44 rounded shadow-lg" />
-                )}
-                <div>
-                    <h1 className="text-4xl font-bold">{playlist.name}</h1>
-                    {playlist.description && (
-                        <p className="mt-2 text-gray-300 text-sm max-w-xl" dangerouslySetInnerHTML={{ __html: playlist.description }}></p>
-                    )}
-                    <p className="mt-1 text-gray-400 text-sm">{playlist.tracks.total} canciones</p>
-                </div>
-            </div>
+        setPlaylist(playlistData);
+      } catch (error) {
+        console.error("Error fetching playlist details:", error.message);
+      }
+    };
 
-            <TrackList tracks={playlist.tracks.items.map(item => item.track)} />
+    fetchPlaylistDetails();
+  }, [playlistId, fetchData, getCachedData]);
+
+  if (isLoading) {
+    return <div className="text-white text-center mt-10">Cargando playlist...</div>;
+  }
+
+  if (!playlist) {
+    return <div className="text-white text-center mt-10">No se encontró la playlist.</div>;
+  }
+
+  return (
+    <div className="text-white p-6">
+      <div className="flex items-center gap-6 mb-8">
+        {playlist.images[0] && (
+          <img
+            src={playlist.images[0].url}
+            alt="Playlist Cover"
+            className="w-44 h-44 rounded shadow-lg"
+          />
+        )}
+        <div>
+          <h1 className="text-4xl font-bold">{playlist.name}</h1>
+          {playlist.description && (
+            <p
+              className="mt-2 text-gray-300 text-sm max-w-xl"
+              dangerouslySetInnerHTML={{ __html: playlist.description }}
+            ></p>
+          )}
+          <p className="mt-1 text-gray-400 text-sm">{playlist.tracks.total} canciones</p>
         </div>
-    );
+      </div>
+
+      <TrackList tracks={playlist.tracks.items.map((item) => item.track)} />
+    </div>
+  );
 };
 
 export default PlaylistDetails;

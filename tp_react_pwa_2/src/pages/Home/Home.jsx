@@ -3,44 +3,42 @@ import Section from "../../components/Section/Section";
 import CardGenre from "../../components/CardGenre/CardGenre";
 import CardType from "../../components/CardType/CardType";
 import { genres } from "../../assets/fakeData/genres";
-import search from "../../services/search.js";
-import Header from "../../components/Header/Header.jsx"
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import Header from "../../components/Header/Header.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 import Button from "../../components/Button/Button";
 import { ArrowLeft } from "lucide-react";
+import useCachedFetch from "../../services/useCachedFetch";
 import fetchSpotifyData from "../../services/fetchSpotifyData.js";
-import Footer from "../../components/Footer/Footer.jsx";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
-  // const [code, setCode] = useState(
-  //   localStorage.getItem("authorization_code") || ""
-  // );
-
-  // const [user, setUser] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { fetchData, isLoading } = useCachedFetch();
+
   const [access_token, setAccessToken] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [tracks, setTracks] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const [searchResults, setSearchResults] = useState({
+    tracks: [],
+    artists: [],
+    playlists: [],
+  });
+
   const isTokenValid = () => {
     const token = localStorage.getItem("access_token");
     const expiration = localStorage.getItem("token_expiration");
 
-    if (!token || !expiration) {
-      return false;
-    }
+    if (!token || !expiration) return false;
 
     const expirationTime = parseInt(expiration, 10);
+    if (isNaN(expirationTime) || Date.now() > expirationTime) return false;
 
-    const readableExpirationTime = new Date(expirationTime).toLocaleString();
-    console.warn("Expiration time (readable):", readableExpirationTime);
-
-    if (isNaN(expirationTime)) {
-      return false;
-    }
-
-    if (Date.now() > expirationTime) {
-      return false;
-    }
     return true;
   };
 
@@ -53,84 +51,61 @@ const Home = () => {
     }
   }, [navigate]);
 
-  // //SEARCH
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState({
-    tracks: [],
-    artists: [],
-    playlists: [],
-  });
-  const [isSearchActive, setIsSearchActive] = useState(false);
-
-  const handleSearch = async (query) => {
-    if (!query.trim()) return;
-    if (!access_token) {
-      console.error("Access token is missing.");
-      return;
-    }
+  const handleGenreClick = async (genreId) => {
+    setSelectedGenre(genreId);
 
     try {
-      setIsSearching(true);
-      const data = await search(access_token, query, "track,artist,playlist");
-      setSearchResults({
-        tracks: data.tracks?.items || [],
-        artists: data.artists?.items || [],
-        playlists: data.playlists?.items || [],
-      });
-      setSearchTerm(query);
-      setIsSearchActive(true); // Activa la búsqueda
+      // Fetch tracks
+      const fetchedTracks = await fetchData("track", genreId, () =>
+        fetchSpotifyData(genreId, "track", access_token)
+      );
+      console.log("Fetched tracks:", fetchedTracks);
+      setTracks(fetchedTracks);
+
+      // Fetch artists
+      const fetchedArtists = await fetchData("artist", genreId, () =>
+        fetchSpotifyData(genreId, "artist", access_token)
+      );
+      console.log("Fetched artists:", fetchedArtists);
+      setArtists(fetchedArtists);
+
+      // Fetch playlists
+      const fetchedPlaylists = await fetchData("playlist", genreId, () =>
+        fetchSpotifyData(genreId, "playlist", access_token)
+      );
+      console.log("Fetched playlists:", fetchedPlaylists);
+      setPlaylists(fetchedPlaylists);
     } catch (error) {
-      console.error("Error during search:", error);
-    } finally {
-      setIsSearching(false);
+      console.error("Error fetching data for genre:", genreId, error);
     }
-  };
-
-
-  const [selectedGenre, setSelectedGenre] = useState();
-
-  const [tracks, setTracks] = useState([]);
-
-  const [artists, setArtists] = useState([]);
-
-  const [playlists, setPlaylists] = useState([]);
-
-  useEffect(() => {
-    if (!selectedGenre) return;
-
-    if (!access_token) return;
-
-    const fetchData = async () => {
-      const fetchArtist = await fetchSpotifyData(
-        selectedGenre,
-        "artist",
-        access_token
-      );
-      setArtists(fetchArtist);
-      const fetchTracks = await fetchSpotifyData(
-        selectedGenre,
-        "track",
-        access_token
-      );
-      setTracks(fetchTracks);
-      const fetchPlaylists = await fetchSpotifyData(
-        selectedGenre,
-        "playlist",
-        access_token
-      );
-      setPlaylists(fetchPlaylists);
-    };
-
-    fetchData();
-  }, [selectedGenre, access_token]);
-
-  const handleGenreClick = (genreId) => {
-    setSelectedGenre(genreId);
   };
 
   const handleBackGenre = () => {
     setSelectedGenre(null);
+  };
+
+  const handleSearch = async (query) => {
+    if (!query.trim()) return;
+
+    try {
+      setSearchTerm(query);
+      setIsSearchActive(true);
+
+      // Fetch search results
+      const fetchedSearchResults = await fetchData("search", query, () =>
+        fetchSpotifyData(query, "track,artist,playlist", access_token)
+      );
+
+      console.log("Fetched search results:", fetchedSearchResults);
+
+      setSearchResults({
+        tracks: fetchedSearchResults.tracks || [],
+        artists: fetchedSearchResults.artists || [],
+        playlists: fetchedSearchResults.playlists || [],
+      });
+    } catch (error) {
+      console.error("Error during search:", error);
+    }
   };
 
   const mapSpotifyItemToCardProps = (item, type) => {
@@ -164,104 +139,63 @@ const Home = () => {
     }
   };
 
-
   return (
-    <div className="text-white ">
-       <Header variant="home" onSearch={handleSearch}/>
-      
-      {/* <Mensaje/> */}
-      <div className="">
-        <div className="Auth border-1"></div>
-        <div className="px-4 py-2 min-h-screen">
-        {isSearching ? (
-          <p className="justify-center text-center pt-4 text-4xl">{t("searching")}</p>
+    <div className="text-white">
+      <Header variant="home" onSearch={handleSearch} />
+
+      <div className="px-4 py-2 min-h-screen">
+        {isLoading ? (
+          <p className="justify-center text-center pt-4 text-4xl">{t("Cargando...")}</p>
         ) : isSearchActive ? (
-          // Mostrar resultados de búsqueda
           <>
             {searchResults.tracks.length > 0 && (
               <Section
                 title={`Canciones encontradas para "${searchTerm}"`}
-                items={searchResults.tracks
-                  .filter((track) => track && track.id) // Filtrar elementos nulos o sin id
-                  .map((track) => ({
-                    id: track.id,
-                    name: track.name,
-                    artist: track.artists
-                      ?.map((artist) => artist.name)
-                      .join(", "),
-                    image: track.album?.images?.[0]?.url || "", // Usa la primera imagen del álbum
-                    type: "track", // Agregar el tipo
-                  }))}
+                items={searchResults.tracks.map((track) =>
+                  mapSpotifyItemToCardProps(track, "track")
+                )}
                 CardComponent={CardType}
               />
             )}
-
             {searchResults.artists.length > 0 && (
               <Section
                 title={`Artistas encontrados para "${searchTerm}"`}
-                items={searchResults.artists
-                  .filter((artist) => artist && artist.id) // Filtrar elementos nulos o sin id
-                  .map((artist) => ({
-                    id: artist.id,
-                    name: artist.name,
-                    artist: null, // No aplica para artistas
-                    image: artist.images?.[0]?.url || "", // Usa la primera imagen del artista
-                    type: "artist", // Agregar el tipo
-                  }))}
+                items={searchResults.artists.map((artist) =>
+                  mapSpotifyItemToCardProps(artist, "artist")
+                )}
                 CardComponent={CardType}
               />
             )}
-
             {searchResults.playlists.length > 0 && (
               <Section
                 title={`Playlists encontradas para "${searchTerm}"`}
-                items={searchResults.playlists
-                  .filter((playlist) => playlist && playlist.id) // Filtrar elementos nulos o sin id
-                  .map((playlist) => ({
-                    id: playlist.id,
-                    name: playlist.name,
-                    artist: playlist.owner?.display_name || "Desconocido", // Usa el nombre del propietario
-                    image: playlist.images?.[0]?.url || "", // Usa la primera imagen de la playlist
-                    type: "playlist", // Agregar el tipo
-                  }))}
+                items={searchResults.playlists.map((playlist) =>
+                  mapSpotifyItemToCardProps(playlist, "playlist")
+                )}
                 CardComponent={CardType}
               />
             )}
           </>
         ) : selectedGenre ? (
-          // Mostrar detalles del género seleccionado
           <>
-            <Button
-              onClick={handleBackGenre}
-              className="cursor-pointer px-5 py-2 text-sm font-medium rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:from-purple-500 hover:to-indigo-500 transition"
-            >
+            <Button onClick={handleBackGenre}>
               <ArrowLeft size={32} className="text-white" />
             </Button>
-            <div className="flex flex-col gap-y-24">
-            <h2 className="font-semibold text-center text-4xl">{selectedGenre.toUpperCase()}</h2>
-
-              <Section
-                title={t("Songs")}
-                items={tracks.map((item) =>
-                  mapSpotifyItemToCardProps(item, "track")
-                )}
-                CardComponent={CardType}
-              />
-              <Section
-                title={t("Artists")}
-                items={artists.map((item) =>
-                  mapSpotifyItemToCardProps(item, "artist")
-                )}
-                CardComponent={CardType}
-              />
-              <Section
-                title={t("Playlists")}
-                items={playlists.map((item) =>
-                  mapSpotifyItemToCardProps(item, "playlist")
-                )}
-                CardComponent={CardType}
-              />
-            </div>
+            <Section
+              title={t("Songs")}
+              items={tracks.map((item) => mapSpotifyItemToCardProps(item, "track"))}
+              CardComponent={CardType}
+            />
+            <Section
+              title={t("Artists")}
+              items={artists.map((item) => mapSpotifyItemToCardProps(item, "artist"))}
+              CardComponent={CardType}
+            />
+            <Section
+              title={t("Playlists")}
+              items={playlists.map((item) => mapSpotifyItemToCardProps(item, "playlist"))}
+              CardComponent={CardType}
+            />
           </>
         ) : (
           <Section
@@ -273,11 +207,10 @@ const Home = () => {
           />
         )}
       </div>
-      </div>
-      <Footer/>
 
+      <Footer />
     </div>
-
   );
 };
+
 export default Home;

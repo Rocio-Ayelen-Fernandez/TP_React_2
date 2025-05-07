@@ -31,7 +31,7 @@ const TrackList = ({ tracks }) => {
             className="grid grid-cols-12 gap-4 px-4 py-2 hover:bg-white/10 transition-colors cursor-pointer"
             onClick={() => onClickNavigateToTrack(track.id)}
           >
-            {console.log(track.id)}
+            {/* {console.log(track.id)} */}
             <div className="col-span-1 text-gray-400">{index + 1}</div>
             <div className="col-span-5 font-medium whitespace-nowrap">
               {track.name}
