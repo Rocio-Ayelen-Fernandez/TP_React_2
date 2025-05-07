@@ -19,5 +19,7 @@
     "Show_Player": "Mostrar Reproductor",
     "creating_playlist": "Creando lista de reproducción...",
     "updating_playlist": "Actualizando lista de reproducción...",
-    "successfully_added_tracks": "Canciones añadidas a la lista de reproducción con éxito!"
+    "successfully_added_tracks": "Canciones añadidas con éxito!",
+    "show_playlist": "Mostrar lista de reproducción",
+    "hide_playlist": "Esconder lista de reproducción"
 }

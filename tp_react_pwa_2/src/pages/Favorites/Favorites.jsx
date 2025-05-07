@@ -82,14 +82,14 @@ const Favorites = () => {
       <Header variant={"favorites"} />
       <div className="flex flex-col md:flex-row p-4 ">
         {/* Lista de favoritos */}
-        <div className="md:w-4/5 mr-5 ml-5 order-2 md:order-1">
+        <div className="md:w-3/4 mr-5 ml-5 order-2 md:order-1">
           <h1 className="text-2xl text-gray-200 font-bold mb-4">
             {t("favorites")}
           </h1>
           {token ? (
             <div
-              className="bg-gradient-to-br from-cyan-950 from-10% via-indigo-900 border-2 border-indigo-700 rounded-md p-4 shadow-xl overflow-x-auto "
-              style={{ maxWidth: "100%", height: "89.2vh" }}
+              className="bg-gradient-to-br from-cyan-950 from-10% via-indigo-900 border-2 border-indigo-700 rounded-md p-4 shadow-xl overflow-x-auto max-h-3/4 "
+              style={{ maxWidth: "100%", height: "90vh" }}
             >
               <ListFavorite token={token} />
             </div>
@@ -99,36 +99,41 @@ const Favorites = () => {
         </div>
 
         {/* Información del usuario */}
-        <div className="md:w-1/5 mr-5 ml-5 order-1 md:order-2">
-          <h1 className="text-2xl text-gray-200 font-bold mb-4">{t('myprofile')}</h1>
+        <div className="md:w-1/4 mr-5 ml-5 order-1 md:order-2"
+          >
+          <h1 className="text-2xl text-gray-200 font-bold mb-4">
+            {t("myprofile")}
+          </h1>
           {userProfile ? (
-            <div className=" backdrop-blur-md bg-none bg-white/5 border border-white/10 shadow-inner rounded-md p-4 justify-center items-center flex flex-col">
-
-              {userProfile.images && userProfile.images[0] && (
-                <div>
-                  <img
-                    className="max-w-30 rounded-2xl shadow-lg pb-2"
-                    src={userProfile.images[0].url}
-                    alt="Profile"
-                  />
-                </div>
-              )}
-              <p className="text-gray-200">
-                <span className=" font-[1000] text-2xl">{userProfile.display_name}</span>
-                
-              </p>
-              <p className="text-gray-200">
-                <span className=" font-[1000]">{t("country")}: </span>
-                {userProfile.country}
-              </p>
-              <p className="text-gray-200">
-                <span className=" font-[1000]">{t("followers")}: </span>
-                {userProfile.followers.total}
-              </p>
-
-              <div className="p-5">
+            <div className=" backdrop-blur-md bg-none bg-white/5 border border-white/10 shadow-inner rounded-md p-4 justify-center items-center flex flex-col max-h-3/4">
+              <div className="max-h-1/2">
+                {userProfile.images && userProfile.images[0] && (
+                  <div>
+                    <img
+                      className="max-w-22 rounded-2xl shadow-lg pb-2"
+                      src={userProfile.images[0].url}
+                      alt="Profile"
+                    />
+                  </div>
+                )}
+                <p className="text-gray-200">
+                  <span className=" font-[1000] text-2xl">
+                    {userProfile.display_name}
+                  </span>
+                </p>
+                <p className="text-gray-200">
+                  <span className=" font-[1000]">{t("country")}: </span>
+                  {userProfile.country}
+                </p>
+                <p className="text-gray-200">
+                  <span className=" font-[1000]">{t("followers")}: </span>
+                  {userProfile.followers.total}
+                </p>
+              </div>
+              <div className="max-h-1/2 py-5">
                 <CreatePlaylist token={token} id={userProfile.id} />
               </div>
+              
             </div>
           ) : (
             <div className="flex items-center space-x-2">
@@ -137,7 +142,7 @@ const Favorites = () => {
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

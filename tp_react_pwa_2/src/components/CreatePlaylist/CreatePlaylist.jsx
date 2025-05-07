@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import getPlaylistFromSpotify from "../../services/getPlaylistFromSpotify.js";
 import { useTranslation } from "react-i18next";
-
+import UserPlaylist from "../UserPlaylist/UserPlaylist";
+import Button from "../Button/Button.jsx";
 
 const CreatePlaylist = ({ token, id }) => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const [tracks, setTracks] = useState({});
   const [playlist, setPlaylist] = useState({});
   const [playlistData, setPlaylistData] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showMessage, setShowMessage] = useState("");
+  const [showPlaylist, setShowPlaylist] = useState(false);
 
   //Obtener token y verificar lista de tracks
   useEffect(() => {
@@ -45,7 +47,7 @@ const CreatePlaylist = ({ token, id }) => {
   const fetchPlaylists = async () => {
     try {
       const data = await getPlaylistFromSpotify(token, id);
-     
+
       setPlaylistData(data.items || []);
     } catch (error) {
       console.error("Error fetching playlist data:", error.message);
@@ -116,7 +118,7 @@ const CreatePlaylist = ({ token, id }) => {
   };
 
   const handleAddToSpotify = async () => {
-    if (isProcessing) return; // Evita múltiples llamadas
+    if (isProcessing) return; 
     setIsProcessing(true);
 
     const storedTracks = localStorage.getItem("favorite");
@@ -135,10 +137,10 @@ const CreatePlaylist = ({ token, id }) => {
     let currentPlaylist = playlist;
 
     if (!currentPlaylist || !currentPlaylist.id) {
-        setShowMessage(t("creating_playlist"));
+      setShowMessage(t("creating_playlist"));
       currentPlaylist = await handleCreatePlaylist();
-    }else{
-        setShowMessage(t("updating_playlist"));
+    } else {
+      setShowMessage(t("updating_playlist"));
     }
 
     if (!currentPlaylist || !currentPlaylist.id) {
@@ -151,12 +153,12 @@ const CreatePlaylist = ({ token, id }) => {
 
     setShowMessage(t("successfully_added_tracks"));
     setTimeout(() => setShowMessage(false), 3000);
-
+    setShowPlaylist(false);
     setIsProcessing(false);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center gap-2">
       <button
         onClick={handleAddToSpotify}
         disabled={
@@ -180,6 +182,23 @@ const CreatePlaylist = ({ token, id }) => {
           {showMessage}
         </div>
       )}
+
+      <div className="">
+        <Button
+          className="cursor-pointer px-6 py-2 sm:rounded-full md:rounded-4xl rounded-2xl font-medium shadow-lg transition-transform duration-300 transform hover:scale-101 focus:outline-none text-sm sm:text-base text-white bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500"
+          onClick={() => setShowPlaylist(!showPlaylist)}
+          children={showPlaylist ? t("hide_playlist") : t("show_playlist")}
+        />
+      </div>
+      <div className="flex justify-center">
+        {showPlaylist && playlist && playlist.id ? (
+          <div className="w-80 max-w-xs overflow-hidden pr-5">
+            <div className="w-full mx-auto overflow-y-auto max-h-[25vh]">
+              <UserPlaylist playlistId={playlist.id} />
+            </div>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

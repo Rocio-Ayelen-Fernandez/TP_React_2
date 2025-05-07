@@ -3,7 +3,6 @@ import Section from "../../components/Section/Section";
 import CardGenre from "../../components/CardGenre/CardGenre";
 import CardType from "../../components/CardType/CardType";
 import { genres } from "../../assets/fakeData/genres";
-import SearchInput from "../../components/SearchInput/SearchInput";
 import search from "../../services/search.js";
 import Header from "../../components/Header/Header.jsx"
 import { useNavigate } from "react-router-dom";
