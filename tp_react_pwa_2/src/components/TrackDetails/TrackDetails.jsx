@@ -64,7 +64,7 @@ const TrackDetails = ({ trackId }) => {
                             <div className="space-y-3 text-center">
                                 <h1 className="text-3xl font-bold">{track.name}</h1>
                                 <p>
-                                    {t("Artista")}:
+                                    {t("Artist")}:
                                     <span className="ml-1">
                                         {track.artists.map((artist, index) => (
                                             <span key={artist.id}>
@@ -82,7 +82,7 @@ const TrackDetails = ({ trackId }) => {
                                     </span>
                                 </p>
                                 <p>
-                                    {t("Álbum")}:
+                                    {t("Album")}:
                                     <span
                                         className="ml-1 hover:underline cursor-pointer text-blue-300"
                                         onClick={() =>
@@ -93,7 +93,7 @@ const TrackDetails = ({ trackId }) => {
                                     </span>
                                 </p>
                                 <p className="text-sm text-gray-300">
-                                    {t("Duración")}: {formatDuration(track.duration_ms)}
+                                    {t("duration")}: {formatDuration(track.duration_ms)}
                                 </p>
                                 <a
                                     href={track.external_urls.spotify}
@@ -101,7 +101,7 @@ const TrackDetails = ({ trackId }) => {
                                     rel="noopener noreferrer"
                                     className="inline-block mt-2 text-sm bg-green-500 hover:bg-green-600 transition-colors px-4 py-2 rounded-full"
                                 >
-                                    {t("Escuchar en Spotify")}
+                                    {t("listen_on_spotify")}
                                 </a>
                                 <div className="mt-4 flex justify-center">
                                     <iframe

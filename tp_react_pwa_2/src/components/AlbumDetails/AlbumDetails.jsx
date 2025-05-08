@@ -7,8 +7,8 @@ const AlbumDetails = ({ albumId }) => {
   const [album, setAlbum] = useState(null);
   const [albumTracks, setAlbumTracks] = useState([]);
   const [access_token, setAccessToken] = useState("");
+  const { t } = useTranslation()
 
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const AlbumDetails = ({ albumId }) => {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-semibold text-white mb-4">
-                {t("songs")}
+                {t("Songs")}
               </h2>
               <div className="bg-white/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
                 <TrackList tracks={albumTracks} />

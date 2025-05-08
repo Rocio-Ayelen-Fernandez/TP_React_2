@@ -13,11 +13,6 @@ import fetchSpotifyData from "../../services/fetchSpotifyData.js";
 import Footer from "../../components/Footer/Footer.jsx";
 
 const Home = () => {
-  // const [code, setCode] = useState(
-  //   localStorage.getItem("authorization_code") || ""
-  // );
-
-  // const [user, setUser] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [access_token, setAccessToken] = useState("");

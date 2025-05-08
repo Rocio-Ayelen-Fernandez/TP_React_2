@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router";
 import { ROUTES } from "../../const/routes";
+import { useTranslation } from "react-i18next";
 
 const AlbumCard = ({ album }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const onClickNavigateToDetails = () => {
     navigate(`${ROUTES.details}?type=${album.album_type}&id=${album.id}`);
   };

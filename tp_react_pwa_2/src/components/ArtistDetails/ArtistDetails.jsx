@@ -1,3 +1,4 @@
+// ... imports
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -135,7 +136,7 @@ const ArtistDetails = ({ artistId }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-purple-800/40 to-indigo-900/70 mix-blend-multiply" />
       </div>
-  
+
       <div className="relative max-w-[80%] mx-auto backdrop-blur-sm bg-white/5 rounded-xl p-4">
         <ArtistHeader
           artist={artist}
@@ -143,20 +144,19 @@ const ArtistDetails = ({ artistId }) => {
           onFollowToggle={toggleFollowArtist}
           isFollowing={isFollowing}
         />
-  
+
         {albumsByType.album && (
-          <AlbumList title={t("Álbumes")} albums={albumsByType.album} />
+          <AlbumList title={t("Albums")} albums={albumsByType.album} />
         )}
         {albumsByType.single && (
           <AlbumList title={t("Singles")} albums={albumsByType.single} />
         )}
         {albumsByType.compilation && (
-          <AlbumList title={t("Compilaciones")} albums={albumsByType.compilation} />
+          <AlbumList title={t("Compilations")} albums={albumsByType.compilation} />
         )}
       </div>
     </div>
   );
-  
 };
 
 export default ArtistDetails;

@@ -5,12 +5,10 @@ import logo from "../../assets/img/logo.svg";
 
 const Login = () => {
 
-    
-
   // 2c33d57b71d945cd8af77809beddbdce (Cuenta OurApp)
   // email: spotifyapiapp.2025@gmail.com
   // password: SpotifyApp2025
-  const clientId = "2c33d57b71d945cd8af77809beddbdce";
+  const clientId = "ede86b9b4287420caef4f7e90054ac56";
   const redirectUri = window.location.origin + "/login";
       
   const navigate = useNavigate();

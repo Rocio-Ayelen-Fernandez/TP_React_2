@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AlbumCard from "../AlbumCard/AlbumCard";
 
 const AlbumList = ({ albums, title }) => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const visibleAlbums = expanded ? albums : albums.slice(0, 5);
+
   return (
     <div className="mt-8 w-full flex flex-col items-center">
       <h2 className="text-xl font-bold mb-6 text-white tracking-wide">
-        {title}
+        {t(title)}
       </h2>
 
       <div className="w-[90%] bg-gradient-to-br from-white/5 via-white/10 to-white/5 rounded-2xl p-6 shadow-inner backdrop-blur-md">
@@ -22,7 +25,7 @@ const AlbumList = ({ albums, title }) => {
               onClick={() => setExpanded(!expanded)}
               className="cursor-pointer px-6 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md hover:from-purple-500 hover:to-indigo-500 transition"
             >
-              {expanded ? "Mostrar menos" : "Expandir"}
+              {expanded ? t("show_less") : t("show_more")}
             </button>
           </div>
         )}
