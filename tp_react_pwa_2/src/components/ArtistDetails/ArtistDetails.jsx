@@ -16,18 +16,21 @@ const ArtistDetails = ({ artistId }) => {
   const [topTracks, setTopTracks] = useState([]);
   const { t } = useTranslation();
 
+// useEffect para obtener el token de acceso desde localStorage al cargar el componente
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) setAccessToken(token);
   }, []);
 
   useEffect(() => {
+
     if (!accessToken || !artistId) return;
 
     const fetchData = async () => {
-      console.log("Fetching artist data...");
+      
       try {
         const artistData = await getArtistById(accessToken, artistId);
+
         setArtist(artistData);
         await Promise.all([
           fetchAlbums(artistId),
@@ -53,15 +56,18 @@ const ArtistDetails = ({ artistId }) => {
   };
 
   const fetchAlbums = async (id) => {
+
     try {
       let allAlbums = [];
       let url = `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single,compilation&limit=50`;
 
       while (url) {
+
         const res = await fetch(url, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         const data = await res.json();
+
         allAlbums = [...allAlbums, ...data.items];
         url = data.next;
       }

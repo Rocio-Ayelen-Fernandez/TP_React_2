@@ -1,7 +1,5 @@
-const fetchSpotifyData = async (genre, type, token) => {
-  // console.log("Fetching Spotify data...");
-  // console.log("Genre:", genre);
-  // console.log("Type:", type);
+const fetchSpotifyData = async (genre, type, access_token) => {
+
   const baseURL = "https://api.spotify.com/v1/search";
 
   let query =
@@ -10,34 +8,21 @@ const fetchSpotifyData = async (genre, type, token) => {
       : `genre:${genre}`; // para tracks y artists sí
 
   try {
+    if (!access_token) {
+      throw new Error("Missing access_token or idArtist");
+  }
     const res = await fetch(
       `${baseURL}?q=${encodeURIComponent(query)}&type=${type}&limit=15`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access_token}`,
         },
       }
     );
 
-    if (res.status === 429) {
-      const retryAfter = res.headers.get("Retry-After");
-      const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 3000;
-      console.warn(`⚠️ Rate limit reached. Retrying after ${waitTime / 1000} seconds...`);
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
-
-      if (retryCount < 3) {
-        return fetchSpotifyData(genre, type, token, retryCount + 1);
-      } else {
-        console.error("❌ Max retry attempts reached.");
-        return [];
-      }
-    }
-
     const data = await res.json();
-    // console.log("DATA", data);
     const items = data[type + "s"]?.items || [];
     const filteredItems = items.filter((item) => item !== null);
-    // console.log("Filtered items:", filteredItems);
     return filteredItems;
   } catch (error) {
     console.error(`Error fetching ${type}s:`, error);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TrackList from "../TrackList/TrackList";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import  getAlbumWithTracks  from "../../services/albumService";
 
 const AlbumDetails = ({ albumId }) => {
   const [album, setAlbum] = useState(null);
@@ -10,48 +11,30 @@ const AlbumDetails = ({ albumId }) => {
   const { t } = useTranslation()
 
   const navigate = useNavigate();
-
+// useEffect para obtener el token de acceso desde localStorage al cargar el componente
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) setAccessToken(token);
   }, []);
 
   useEffect(() => {
-    if (access_token && albumId) {
-      const fetchAlbum = async () => {
-        try {
-          const res = await fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
-            headers: { Authorization: `Bearer ${access_token}` },
-          });
-          if (!res.ok) {
-            throw new Error("Album not found");
-          }
-          const data = await res.json();
-          setAlbum(data);
-          getAlbumTracksByAlbumId(albumId);
-        } catch (error) {
-          console.error("Error fetching album:", error);
-          navigate("/Error404"); 
-        }
-      };
-      fetchAlbum();
-    }
+    if (!access_token || !albumId) return;
+
+    const fetchAlbumData = async () => {
+      try {
+        const { album, tracks } = await getAlbumWithTracks(access_token, albumId);
+        setAlbum(album);
+        setAlbumTracks(tracks);
+      } catch (error) {
+        console.error("Error al obtener álbum con tracks:", error);
+        navigate("/Error404");
+      }
+    };
+
+    fetchAlbumData();
   }, [access_token, albumId, navigate]);
 
-  const getAlbumTracksByAlbumId = async (id) => {
-    try {
-      const res = await fetch(
-        `https://api.spotify.com/v1/albums/${id}/tracks`,
-        {
-          headers: { Authorization: `Bearer ${access_token}` },
-        }
-      );
-      const data = await res.json();
-      setAlbumTracks(data.items);
-    } catch (err) {
-      console.error("Error al obtener las canciones", err);
-    }
-  };
+ 
 
   return (
     <div className="relative w-full overflow-hidden shadow-xl">

@@ -21,13 +21,7 @@
         throw error;
     }
 
-//     const response = await fetch(`https://api.spotify.com/v1/users/lxc8p8106hk2jzve68p5izobs/playlists`, {
-//     headers: {
-//       Authorization: `Bearer ${access_token}`,
-//     },
-//   })
-//     .then(res => res.json())
-//     .then(data => console.log('USER PLAYLISTS:', data));
+
   
   }
   

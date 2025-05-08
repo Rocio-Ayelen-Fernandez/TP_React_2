@@ -13,9 +13,10 @@ import fetchSpotifyData from "../../services/fetchSpotifyData.js";
 import Footer from "../../components/Footer/Footer.jsx";
 
 const Home = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Traducciones
   const navigate = useNavigate();
   const [access_token, setAccessToken] = useState("");
+    // Verifica si el token está presente y vigente
   const isTokenValid = () => {
     const token = localStorage.getItem("access_token");
     const expiration = localStorage.getItem("token_expiration");
@@ -38,17 +39,17 @@ const Home = () => {
     }
     return true;
   };
-
+  // Valida el token al montar el componente
   useEffect(() => {
     const valid = isTokenValid();
     if (valid) {
       setAccessToken(localStorage.getItem("access_token"));
     } else {
-      navigate("/Login");
+      navigate("/Login"); // Redirige al login si el token es inválido
     }
   }, [navigate]);
 
-  // //SEARCH
+    // Estados relacionados a la búsqueda
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState({
@@ -58,6 +59,7 @@ const Home = () => {
   });
   const [isSearchActive, setIsSearchActive] = useState(false);
 
+    // Ejecuta la búsqueda usando el servicio `search`
   const handleSearch = async (query) => {
     if (!query.trim()) return;
     if (!access_token) {
@@ -82,15 +84,13 @@ const Home = () => {
     }
   };
 
-
+  // Estados relacionados al género seleccionado
   const [selectedGenre, setSelectedGenre] = useState();
-
   const [tracks, setTracks] = useState([]);
-
   const [artists, setArtists] = useState([]);
-
   const [playlists, setPlaylists] = useState([]);
 
+    // Fetch de datos desde Spotify al seleccionar un género
   useEffect(() => {
     if (!selectedGenre) return;
 
@@ -128,6 +128,7 @@ const Home = () => {
     setSelectedGenre(null);
   };
 
+    // Mapea items de Spotify al formato esperado por CardType
   const mapSpotifyItemToCardProps = (item, type) => {
     switch (type) {
       case "track":
@@ -224,7 +225,7 @@ const Home = () => {
             )}
           </>
         ) : selectedGenre ? (
-          // Mostrar detalles del género seleccionado
+          // Muestra contenido filtrado por género
           <>
             <Button
               onClick={handleBackGenre}
@@ -259,6 +260,7 @@ const Home = () => {
             </div>
           </>
         ) : (
+             // Muestra los géneros disponibles
           <Section
             title={t("Genres")}
             items={genres}
