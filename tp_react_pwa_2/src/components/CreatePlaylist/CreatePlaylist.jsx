@@ -174,7 +174,7 @@ const CreatePlaylist = ({ token, id }) => {
             : "bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500 "
         }`}
       >
-        {isProcessing ? "Procesando..." : "Agregar a Spotify"}
+        {isProcessing ? t("loading") : t("add_to_playlist")}
       </button>
 
       {showMessage && (

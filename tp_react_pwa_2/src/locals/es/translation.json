@@ -35,5 +35,6 @@
   "show_playlist": "Mostrar lista de reproducción",
   "hide_playlist": "Esconder lista de reproducción",
   "go_to_home": "Ir a inicio",
-  "page_not_found": "Pagina no encontrada"
+  "page_not_found": "Pagina no encontrada",
+  "add_to_playlist": "Añadir a lista de reproducción"
 }
