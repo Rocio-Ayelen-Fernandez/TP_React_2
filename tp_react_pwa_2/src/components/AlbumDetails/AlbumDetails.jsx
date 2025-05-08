@@ -51,7 +51,7 @@ const AlbumDetails = ({ albumId }) => {
 
   return (
     <div className="relative w-full overflow-hidden shadow-xl">
-      <div className="absolute inset-0 z-0 mb-10 items-center">
+      <div className="absolute inset-0 z-0 items-center h-full">
         {album ? (
           <>
             <img
@@ -68,9 +68,9 @@ const AlbumDetails = ({ albumId }) => {
         )}
       </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10 text-white">
+      <div className="relative z-10 flex flex-col items-center justify-center p-0 md:px-4 md:py-10 text-white">
         {album && (
-          <div className="backdrop-blur-md bg-white/5 px-6 py-6 rounded-xl border border-white/10 shadow-inner w-full flex flex-col md:flex-row items-center gap-6">
+          <div className="backdrop-blur-none md:backdrop-blur-md md:bg-white/5 px-6 py-6 rounded-xl md:border md:border-white/10 md:shadow-inner w-full flex flex-col md:flex-row items-center gap-6">
             <div className="flex flex-col items-center md:items-center md:w-1/4">
               <div className="w-48 h-48 rounded-lg overflow-hidden shadow-lg mb-4">
                 <img
@@ -105,7 +105,7 @@ const AlbumDetails = ({ albumId }) => {
                 {album.release_date}
               </p>
             </div>
-            <div className="flex-1">
+            <div className="w-[100%] md:flex-1">
               <h2 className="text-2xl font-semibold text-white mb-4">
                 {t("Songs")}
               </h2>

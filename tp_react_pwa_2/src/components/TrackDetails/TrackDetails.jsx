@@ -34,10 +34,10 @@ const TrackDetails = ({ trackId }) => {
     };
 
     return (
-        <div className="px-4 py-6 w-full border">
+        <div className="md:px-4 md:py-6 w-full">
             {track ? (
-                <div className="w-[60%] mx-auto my-10 gap-8">
-                    <div className="border relative col-span-1 lg:col-span-1 overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-br from-purple-700/60 via-indigo-800/50 to-black/80 backdrop-blur-lg">
+                <div className="w-full sm:w-full md:w-[80%] lg:w-[60%] md:mx-auto">
+                    <div className="py-8 relative col-span-1 lg:col-span-1 overflow-hidden rounded-0 md:rounded-2xl shadow-2xl bg-gradient-to-br from-purple-700/60 via-indigo-800/50 to-black/80 backdrop-blur-lg">
                         <div className="absolute inset-0">
                             <img
                                 src={track.album.images[0]?.url}
@@ -46,7 +46,7 @@ const TrackDetails = ({ trackId }) => {
                             />
                         </div>
                         <div className="pl-10 relative z-10 flex flex-col  items-center p-6 gap-4 text-white">
-                            <div className="w-40h-40 md:w-48 md:h-48 mx-auto lg:mx-0 rounded-xl overflow-hidden shadow-md">
+                            <div className="w-48 h-48 md:w-48 md:h-48 mx-auto lg:mx-0 rounded-xl overflow-hidden shadow-md">
                                 <img
                                     src={track.album.images[0]?.url}
                                     alt={track.name}

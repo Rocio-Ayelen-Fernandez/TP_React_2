@@ -5,6 +5,7 @@ import getPlaylistById from "../../services/getPlaylistById.js";
 import getArtistById from "../../services/getArtistById.js";
 import Player from "../../components/Player/Player.jsx";
 import { useTranslation } from "react-i18next";
+import Button from "../Button/Button.jsx";
 
 const ListFavorite = ({ token }) => {
   const { t } = useTranslation();
@@ -173,12 +174,12 @@ const ListFavorite = ({ token }) => {
               object.type === "album" ||
               object.type === "playlist") && (
               <div className="flex flex-col md:flex-row justify-center mt-2">
-                <button
+                <Button
                   onClick={() => toggleVisibility(object.id)}
                   className="cursor-pointer px-6 py-2 sm:rounded-full md:rounded-4xl rounded-2xl font-medium shadow-lg transition-transform duration-300 transform hover:scale-101 focus:outline-none text-sm sm:text-base bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500  text-center"
                 >
                   {isVisible === object.id ? t("Hide_Player") : t("Show_Player")}
-                </button>
+                </Button>
               </div>
             )}
           </div>

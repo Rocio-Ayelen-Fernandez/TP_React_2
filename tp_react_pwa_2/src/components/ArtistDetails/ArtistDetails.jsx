@@ -15,14 +15,14 @@ const ArtistDetails = ({ artistId }) => {
   const [topTracks, setTopTracks] = useState([]);
   const { t } = useTranslation();
 
-// useEffect para obtener el token de acceso desde localStorage al cargar el componente
+  // useEffect para obtener el token de acceso desde localStorage al cargar el component
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
     if (!token || !artistId) return;
 
     const fetchData = async () => {
-      
+
       try {
         const artistData = await getArtistById(token, artistId);
         setArtist(artistData);
@@ -48,6 +48,7 @@ const ArtistDetails = ({ artistId }) => {
       console.error(t("Error al obtener las canciones populares:"), error);
     }
   };
+
 
   const fetchAlbums = async (id, token) => {
     try {
@@ -137,7 +138,7 @@ const ArtistDetails = ({ artistId }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-purple-800/40 to-indigo-900/70 mix-blend-multiply" />
       </div>
 
-      <div className="relative max-w-[80%] mx-auto backdrop-blur-sm bg-white/5 rounded-xl p-4">
+      <div className="relative w-full md:max-w-[80%] mx-auto md:backdrop-blur-sm md:bg-white/5 md:rounded-xl p-4">
         <ArtistHeader
           artist={artist}
           topTracks={topTracks}

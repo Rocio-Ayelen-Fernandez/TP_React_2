@@ -9,6 +9,7 @@
   "Playlists": "Playlists",
   "welcome": "Welcome",
   "home": "Home",
+  "title": "Title",
   "show_less": "Show Less",
   "show_more": "Show More",
   "follow": "Follow",
@@ -35,6 +36,5 @@
   "show_playlist": "Show playlist",
   "hide_playlist": "Hide playlist",
   "go_to_home": "Go to home",
-  "page_not_found": "Page not found",
-  "add_to_playlist": "Add to playlist"
+  "page_not_found": "Page not found"
 }
