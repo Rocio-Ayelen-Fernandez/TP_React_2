@@ -15,21 +15,17 @@ import Footer from "../../components/Footer/Footer.jsx";
 const Home = () => {
   const { t } = useTranslation(); // Traducciones
   const navigate = useNavigate();
-  const [access_token, setAccessToken] = useState("");
-    // Verifica si el token está presente y vigente
-  const isTokenValid = () => {
-    const token = localStorage.getItem("access_token");
-    const expiration = localStorage.getItem("token_expiration");
+  const access_token = localStorage.getItem("access_token");
+  const expiration = localStorage.getItem("token_expiration");
 
-    if (!token || !expiration) {
+// Verifica si el token es válido
+  const isTokenValid = () => {
+    if (!access_token || !expiration) {
       return false;
     }
-
     const expirationTime = parseInt(expiration, 10);
-
     const readableExpirationTime = new Date(expirationTime).toLocaleString();
     console.warn("Expiration time (readable):", readableExpirationTime);
-
     if (isNaN(expirationTime)) {
       return false;
     }
@@ -39,12 +35,10 @@ const Home = () => {
     }
     return true;
   };
-  // Valida el token al montar el componente
+
   useEffect(() => {
     const valid = isTokenValid();
-    if (valid) {
-      setAccessToken(localStorage.getItem("access_token"));
-    } else {
+    if (!valid) {
       navigate("/Login"); // Redirige al login si el token es inválido
     }
   }, [navigate]);
