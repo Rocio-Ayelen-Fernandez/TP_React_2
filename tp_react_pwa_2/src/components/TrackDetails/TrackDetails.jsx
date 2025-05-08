@@ -6,22 +6,14 @@ import { useTranslation } from "react-i18next";
 const TrackDetails = ({ trackId }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-
-    const [access_token, setAccessToken] = useState(null);
     const [track, setTrack] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
-        if (token) {
-            setAccessToken(token);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (access_token && trackId) {
+        if (token && trackId) {
           const fetchTrack = async () => {
             try {
-              const foundTrack = await getTrackById(access_token, trackId);
+              const foundTrack = await getTrackById(token, trackId);
               if (!foundTrack) {
                 throw new Error("Track not found");
               }
@@ -33,7 +25,7 @@ const TrackDetails = ({ trackId }) => {
           };
           fetchTrack();
         }
-      }, [access_token, trackId, navigate]);
+      }, [trackId, navigate]);
 
     const formatDuration = (ms) => {
         const minutes = Math.floor(ms / 60000);

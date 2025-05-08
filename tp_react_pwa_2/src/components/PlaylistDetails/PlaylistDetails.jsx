@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
-import getPlaylistById from "../../services/getPlaylistById";
 import TrackList from "../../components/TrackList/TrackList"; 
 import { useNavigate } from "react-router-dom";
 
 const PlaylistDetails = ({ playlistId }) => {
     const navigate = useNavigate();
-    const [access_token, setAccessToken] = useState("");
     const [playlist, setPlaylist] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
-        if (token) {
-            setAccessToken(token);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (access_token && playlistId) {
+        if (token && playlistId) {
             const fetchPlaylist = async () => {
                 try {
                     const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-                        headers: { Authorization: `Bearer ${access_token}` },
+                        headers: { Authorization: `Bearer ${token}` },
                     });
 
                     if (!res.ok) {
@@ -38,7 +30,7 @@ const PlaylistDetails = ({ playlistId }) => {
             };
             fetchPlaylist();
         }
-    }, [access_token, playlistId, navigate]);
+    }, [playlistId, navigate]);
 
     if (!playlist) {
         return <div className="text-white text-center mt-10">Cargando playlist...</div>;

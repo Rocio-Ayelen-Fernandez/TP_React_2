@@ -13,13 +13,12 @@ const Details = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const id = searchParams.get("id");
-
-  const [access_token, setAccessToken] = useState("");
+  const token = localStorage.getItem("access_token");
+    const expiration = localStorage.getItem("token_expiration");
 
   const navigate = useNavigate();
   const isTokenValid = () => {
-    const token = localStorage.getItem("access_token");
-    const expiration = localStorage.getItem("token_expiration");
+    
  
     if (!token || !expiration) {
       return false;
@@ -38,20 +37,16 @@ const Details = () => {
   };
   
   useEffect(() => {
+    const validTypes = ["artist", "album", "single", "compilation", "track", "playlist"];
     const valid = isTokenValid();
-    if (valid) {
-      setAccessToken(localStorage.getItem("access_token"));
-    } else {
+    if (!valid) {
       navigate("/Login");
     }
-  }, [navigate]);
-
-  useEffect(() => {
-    const validTypes = ["artist", "album", "single", "compilation", "track", "playlist"];
     if (!validTypes.includes(type)) {
       navigate("/Error404");
     }
-  }, [type, navigate]);
+  }, [navigate, type]);
+
 
 
   return (

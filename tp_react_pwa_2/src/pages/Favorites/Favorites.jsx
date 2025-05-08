@@ -10,72 +10,54 @@ import Footer from "../../components/Footer/Footer.jsx";
 const Favorites = () => {
   const { t } = useTranslation();
   const [userProfile, setUserProfile] = useState(null);
-  const [token, setToken] = useState(null);
-
   const navigate = useNavigate();
-  const isTokenValid = () => {
-    const token = localStorage.getItem("access_token");
-    const expiration = localStorage.getItem("token_expiration");
+  const token = localStorage.getItem("access_token");
+  const expiration = localStorage.getItem("token_expiration");
 
+  useEffect(() => {
+    
+    const valid = isTokenValid(token, expiration);
+
+    if (!token && !valid){
+      navigate("/Login");
+    }else{
+
+      const fetchUserProfile = async () => {
+        try {
+          const profile = await getUserProfile(token);
+          setUserProfile(profile);
+        } catch (err) {
+          console.error("Error fetching user profile:", err.message);
+          setError(err.message);
+        }
+      };
+  
+      fetchUserProfile();
+    }
+    
+  }, [navigate, t, token, expiration]);
+
+  const isTokenValid = (token, expiration) => {
     if (!token || !expiration) {
       return false;
     }
-
     const expirationTime = parseInt(expiration, 10);
-
     if (isNaN(expirationTime)) {
       return false;
     }
-
     if (Date.now() > expirationTime) {
       return false;
     }
     return true;
   };
 
-  useEffect(() => {
-    const valid = isTokenValid();
-    if (valid) {
-      setToken(localStorage.getItem("access_token"));
-    } else {
-      navigate("/Login");
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    // localStorage.setItem(
-    //     "favorite",
-    //     JSON.stringify({
-    //         "track": [
-    //             { "id": "11dFghVXANMlKmJXsNCbNl", "name": "Track 1" }
-    //         ],
-    //         "album": [
-    //             { "id": "4aawyAB9vmqN3uQ7FjRGTy", "name": "Album 1" }
-    //         ],
-    //         "playlist": [
-    //             { "id": "3cEYpjA9oz9GiPac4AsH4n", "name": "Playlist 1" }
-    //         ],
-    //         "artist": [
-    //             { "id": "0TnOYISbd1XYRBk9myaseg", "name": "Artist 1" }
-    //         ]
-    //     })
-    // );
-  }, []);
-
-  useEffect(() => {
-    if (!token) return;
-    const fetchUserProfile = async () => {
-      try {
-        const profile = await getUserProfile(token);
-        setUserProfile(profile);
-      } catch (err) {
-        console.error("Error fetching user profile:", err.message);
-        setError(err.message);
-      }
-    };
-
-    fetchUserProfile();
-  }, [token]);
+  if (!isTokenValid(token, expiration)) {
+    return (
+      <div className="text-center text-white mt-10">
+        {t("loading")}
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -99,8 +81,7 @@ const Favorites = () => {
         </div>
 
         {/* Información del usuario */}
-        <div className="md:w-1/4 mr-5 ml-5 order-1 md:order-2"
-          >
+        <div className="md:w-1/4 mr-5 ml-5 order-1 md:order-2">
           <h1 className="text-2xl text-gray-200 font-bold mb-4">
             {t("myprofile")}
           </h1>
@@ -133,7 +114,6 @@ const Favorites = () => {
               <div className="max-h-1/2 py-5">
                 <CreatePlaylist token={token} id={userProfile.id} />
               </div>
-              
             </div>
           ) : (
             <div className="flex items-center space-x-2">

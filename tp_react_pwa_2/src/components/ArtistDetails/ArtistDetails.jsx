@@ -10,7 +10,6 @@ import getTopTracksByArtist from "../../services/getTopTracksByArtist";
 const ArtistDetails = ({ artistId }) => {
   const navigate = useNavigate();
   const [artist, setArtist] = useState(null);
-  const [accessToken, setAccessToken] = useState("");
   const [albums, setAlbums] = useState([]);
   const [isFollowing, setIsFollowing] = useState(null);
   const [topTracks, setTopTracks] = useState([]);
@@ -19,23 +18,18 @@ const ArtistDetails = ({ artistId }) => {
 // useEffect para obtener el token de acceso desde localStorage al cargar el componente
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    if (token) setAccessToken(token);
-  }, []);
 
-  useEffect(() => {
-
-    if (!accessToken || !artistId) return;
+    if (!token || !artistId) return;
 
     const fetchData = async () => {
       
       try {
-        const artistData = await getArtistById(accessToken, artistId);
-
+        const artistData = await getArtistById(token, artistId);
         setArtist(artistData);
         await Promise.all([
-          fetchAlbums(artistId),
-          fetchTopTracks(artistData.id),
-          checkIfFollowing(artistId),
+          fetchAlbums(artistId, token),
+          fetchTopTracks(artistData.id, token),
+          checkIfFollowing(artistId, token),
         ]);
       } catch (error) {
         console.error(t("Error al obtener datos del artista:"), error);
@@ -44,19 +38,18 @@ const ArtistDetails = ({ artistId }) => {
     };
 
     fetchData();
-  }, [accessToken, artistId]);
+  }, [navigate, artistId, t]);
 
-  const fetchTopTracks = async (id) => {
+  const fetchTopTracks = async (id, token) => {
     try {
-      const tracks = await getTopTracksByArtist(accessToken, id);
+      const tracks = await getTopTracksByArtist(token, id);
       setTopTracks(tracks);
     } catch (error) {
       console.error(t("Error al obtener las canciones populares:"), error);
     }
   };
 
-  const fetchAlbums = async (id) => {
-
+  const fetchAlbums = async (id, token) => {
     try {
       let allAlbums = [];
       let url = `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single,compilation&limit=50`;
@@ -64,7 +57,7 @@ const ArtistDetails = ({ artistId }) => {
       while (url) {
 
         const res = await fetch(url, {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
 
@@ -78,12 +71,12 @@ const ArtistDetails = ({ artistId }) => {
     }
   };
 
-  const checkIfFollowing = async (id) => {
+  const checkIfFollowing = async (id, token) => {
     try {
       const res = await fetch(
         `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`,
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       const data = await res.json();
@@ -94,7 +87,8 @@ const ArtistDetails = ({ artistId }) => {
   };
 
   const toggleFollowArtist = async () => {
-    if (!artist || !accessToken) return;
+    const token = localStorage.getItem("access_token");
+    if (!artist || !token) return;
 
     const method = isFollowing ? "DELETE" : "PUT";
     const url = `https://api.spotify.com/v1/me/following?type=artist&ids=${artist.id}`;
@@ -103,7 +97,7 @@ const ArtistDetails = ({ artistId }) => {
       const res = await fetch(url, {
         method,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

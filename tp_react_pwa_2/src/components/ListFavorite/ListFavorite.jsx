@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import getTrackById from "../../services/getTrackById.js";
 import getAlbumById from "../../services/getAlbumById.js";
 import getPlaylistById from "../../services/getPlaylistById.js";
@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const ListFavorite = ({ token }) => {
   const { t } = useTranslation();
-  const [favoriteList, setFavoriteList] = useState({}); // Cambiado a un objeto vacío
+  const [favoriteList, setFavoriteList] = useState({});
   const [data, setData] = useState({});
   const [isVisible, setIsVisible] = useState(false);
 
@@ -28,7 +28,7 @@ const ListFavorite = ({ token }) => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorite")) || {};
     console.log("Stored Favorites:", storedFavorites);
 
-    // Asegurarse de que los datos sean un objeto con las claves esperadas
+
     if (typeof storedFavorites === "object" && storedFavorites !== null) {
       setFavoriteList(storedFavorites);
     } else {
