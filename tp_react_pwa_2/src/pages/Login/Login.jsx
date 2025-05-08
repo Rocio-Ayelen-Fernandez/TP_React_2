@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import Authorization from "../../components/Authorization/Authorization";
 import logo from "../../assets/img/logo.svg";
+import bg404 from "../../assets/img/bg404.jpg";
 
 const Login = () => {
 
@@ -90,13 +91,31 @@ const clientId = "2479f37942694919ba1f105622b0d8ec";
 
 
   return (
-    <div className="h-screen flex flex-col p-5 items-center justify-center gap-5">
-      <img className="h-40 pulse" src={logo} alt="Lily_logo"/>
-      <div>
-        <h1 className="text-gray-200 text-2xl font-bold mb-4 text-center">Inicia sesión con Spotify</h1>
-        <p className=" text-gray-200 text-lg text-center">Por favor, autoriza tu cuenta para continuar.</p>
+    // Estilo de fondo y animación
+    <div
+      className="relative h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
+      style={{
+        backgroundImage: `url(${bg404})`,
+        animation: "warp 50s infinite linear",
+        backgroundSize: "200% 200%",
+      }}
+    >
+      {/* Gradiente de fondo */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-indigo-950 opacity-80"></div>
+
+      {/* Contenido principal */}
+      <div className="relative z-10 flex flex-col p-5 items-center justify-center gap-5">
+        <img className="h-40" src={logo} alt="Lily_logo" />
+        <div>
+          <h1 className="text-gray-200 text-2xl font-bold mb-4 text-center">
+            Inicia sesión con Spotify
+          </h1>
+          <p className="text-gray-200 text-lg text-center">
+            Por favor, autoriza tu cuenta para continuar.
+          </p>
+        </div>
+        <Authorization clientId={clientId} redirectUri={redirectUri} />
       </div>
-      <Authorization clientId={clientId} redirectUri={redirectUri} />
     </div>
   );
 };
