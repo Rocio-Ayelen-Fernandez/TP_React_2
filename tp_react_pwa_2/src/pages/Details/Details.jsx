@@ -66,11 +66,10 @@ const Details = () => {
   //   }
   // }, [access_token, type, id]);
 
-
+console.log("Type (Details):", type);
   return (
       <div>
          <Header variant={"details"}/>
-        {/* <AddToFavorite type={type} id={id}/> */}
         {type === "artist" && <ArtistDetails artistId={id} />}
         {(type === "album" || type === "single" || type === "compilation") && <AlbumDetails albumId={id} />}
         {type === "track" && <TrackDetails trackId={id} />}

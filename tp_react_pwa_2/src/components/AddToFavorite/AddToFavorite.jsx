@@ -61,7 +61,7 @@ const AddToFavorite = ({ id, type }) => {
             viewBox="0 0 24 24"
             strokeWidth="2.2"
             stroke="currentColor"
-            className="size-10"
+            className="size-10 cursor-pointer "
           >
             <path
               strokeLinecap="round"

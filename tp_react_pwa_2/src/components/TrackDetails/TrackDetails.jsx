@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import getTrackById from "../../services/getTrackById";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import TrackList from "../TrackList/TrackList";
 
 const TrackDetails = ({ trackId }) => {
     const navigate = useNavigate();
@@ -19,6 +18,7 @@ const TrackDetails = ({ trackId }) => {
     }, []);
 
     useEffect(() => {
+        console.log("Track ID:", trackId);
         if (access_token && trackId) {
             const fetchTrack = async () => {
                 const foundTrack = await getTrackById(access_token, trackId);
@@ -36,10 +36,10 @@ const TrackDetails = ({ trackId }) => {
     };
 
     return (
-        <div className="px-4">
+        <div className="px-4 py-6 w-full border">
             {track ? (
-                <div className="w-full max-w-7xl mx-auto my-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="relative col-span-1 lg:col-span-1 overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-br from-purple-700/60 via-indigo-800/50 to-black/80 backdrop-blur-lg">
+                <div className="w-[60%] mx-auto my-10 gap-8">
+                    <div className="border relative col-span-1 lg:col-span-1 overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-br from-purple-700/60 via-indigo-800/50 to-black/80 backdrop-blur-lg">
                         <div className="absolute inset-0">
                             <img
                                 src={track.album.images[0]?.url}
@@ -47,15 +47,15 @@ const TrackDetails = ({ trackId }) => {
                                 className="w-full h-full object-cover blur-lg scale-110 opacity-30"
                             />
                         </div>
-                        <div className="relative z-10 flex flex-col p-6 gap-4 text-white">
-                            <div className="w-40 h-40 md:w-48 md:h-48 mx-auto lg:mx-0 rounded-xl overflow-hidden shadow-md">
+                        <div className="pl-10 relative z-10 flex flex-col  items-center p-6 gap-4 text-white">
+                            <div className="w-40h-40 md:w-48 md:h-48 mx-auto lg:mx-0 rounded-xl overflow-hidden shadow-md">
                                 <img
                                     src={track.album.images[0]?.url}
                                     alt={track.name}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <div className="space-y-3 text-center lg:text-left">
+                            <div className="space-y-3 text-center">
                                 <h1 className="text-3xl font-bold">{track.name}</h1>
                                 <p>
                                     {t("Artista")}:
@@ -97,11 +97,11 @@ const TrackDetails = ({ trackId }) => {
                                 >
                                     {t("Escuchar en Spotify")}
                                 </a>
-                                <div className="mt-4 w-full">
+                                <div className="mt-4 flex justify-center">
                                     <iframe
                                         src={`https://open.spotify.com/embed/track/${track.id}`}
-                                        width="100%"
                                         height="80"
+                                        width="90%"
                                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                         loading="lazy"
                                         className="rounded-xl shadow-lg"

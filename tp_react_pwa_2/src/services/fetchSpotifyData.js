@@ -1,7 +1,7 @@
 const fetchSpotifyData = async (genre, type, token) => {
-  console.log("Fetching Spotify data...");
-  console.log("Genre:", genre);
-  console.log("Type:", type);
+  // console.log("Fetching Spotify data...");
+  // console.log("Genre:", genre);
+  // console.log("Type:", type);
   const baseURL = "https://api.spotify.com/v1/search";
 
   let query =
@@ -34,10 +34,10 @@ const fetchSpotifyData = async (genre, type, token) => {
     }
 
     const data = await res.json();
-    console.log("DATA", data);
+    // console.log("DATA", data);
     const items = data[type + "s"]?.items || [];
     const filteredItems = items.filter((item) => item !== null);
-    console.log("Filtered items:", filteredItems);
+    // console.log("Filtered items:", filteredItems);
     return filteredItems;
   } catch (error) {
     console.error(`Error fetching ${type}s:`, error);
