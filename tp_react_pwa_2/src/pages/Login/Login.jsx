@@ -6,13 +6,11 @@ import logo from "../../assets/img/logo.svg";
 const Login = () => {
 
     
-  //Lista de ids de cliente de Spotify disponibles para usar
-  // en caso de rate limit
-  // 5c271aa13f7641f8b283fae8ab5c8f70 (Cuenta Rocio) (7/05/2025- 17:16)
-  // ede86b9b4287420caef4f7e90054ac56 (Cuenta Brisa)
-  // 2479f37942694919ba1f105622b0d8ec (Cuenta Florencia)
+
   // 2c33d57b71d945cd8af77809beddbdce (Cuenta OurApp)
-  const clientId = "ede86b9b4287420caef4f7e90054ac56";
+  // email: spotifyapiapp.2025@gmail.com
+  // password: SpotifyApp2025
+  const clientId = "2c33d57b71d945cd8af77809beddbdce";
   const redirectUri = window.location.origin + "/login";
       
   const navigate = useNavigate();
