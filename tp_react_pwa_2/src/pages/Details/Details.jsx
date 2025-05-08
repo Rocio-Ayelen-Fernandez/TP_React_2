@@ -1,7 +1,6 @@
 import { ROUTES } from "../../const/routes.js";
 import ArtistDetails from '../../components/ArtistDetails/ArtistDetails';
 import AlbumDetails from '../../components/AlbumDetails/AlbumDetails'
-import AddToFavorite from "../../components/AddToFavorite/AddToFavorite";
 import TrackDetails from "../../components/TrackDetails/TrackDetails.jsx";
 import PlaylistDetails from "../../components/PlaylistDetails/PlaylistDetails.jsx";
 import { useSearchParams } from "react-router";
@@ -15,7 +14,6 @@ const Details = () => {
   const type = searchParams.get("type");
   const id = searchParams.get("id");
 
-  const [artist, setArtist] = useState(null);
   const [access_token, setAccessToken] = useState("");
 
   const navigate = useNavigate();
@@ -48,25 +46,14 @@ const Details = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const validTypes = ["artist", "album", "single", "compilation", "track", "playlist"];
+    if (!validTypes.includes(type)) {
+      navigate("/Error404");
+    }
+  }, [type, navigate]);
 
 
-  // useEffect(() => {
-  //   if (access_token && type === "artist") {
-  //     getArtistById();
-  //   }
-  // }, [access_token, type]);
-
-  // useEffect(() => {
-  //   if (!access_token || !type || !id) return;
-
-  //   if (type === "artist") {
-  //     getArtistById(id);
-  //   } else if (type === "album") {
-  //     getAlbumById(id);
-  //   }
-  // }, [access_token, type, id]);
-
-console.log("Type (Details):", type);
   return (
       <div>
          <Header variant={"details"}/>

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import ArtistHeader from "../ArtistHeader/ArtistHeader";
 import AlbumList from "../AlbumList/AlbumList";
 import getArtistById from "../../services/getArtistById";
 import getTopTracksByArtist from "../../services/getTopTracksByArtist";
 
 const ArtistDetails = ({ artistId }) => {
+  const navigate = useNavigate();
   const [artist, setArtist] = useState(null);
   const [accessToken, setAccessToken] = useState("");
   const [albums, setAlbums] = useState([]);
   const [isFollowing, setIsFollowing] = useState(null);
   const [topTracks, setTopTracks] = useState([]);
-
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const ArtistDetails = ({ artistId }) => {
         ]);
       } catch (error) {
         console.error(t("Error al obtener datos del artista:"), error);
+        navigate("/Error404");
       }
     };
 

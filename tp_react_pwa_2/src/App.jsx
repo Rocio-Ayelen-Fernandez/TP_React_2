@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Home from './pages/Home/Home'
 import Details from './pages/Details/Details'
 import Favorites from './pages/Favorites/Favorites'
+import Error404 from './pages/Error404/Error404'
 import { ROUTES } from './const/routes'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -23,7 +24,7 @@ function App() {
             <Route element={ <Home/> } path={ROUTES.home} />
             <Route element={ <Details />} path={ROUTES.details} />
             <Route element={ <Favorites />} path={ROUTES.favorites} /> 
-          
+            <Route element={ <Error404/>} path="*" />
           </Routes>
 
         

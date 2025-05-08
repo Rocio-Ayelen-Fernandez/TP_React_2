@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-
+import Button from "../Button/Button.jsx";
 const Authorization = ({ clientId, redirectUri }) => {
   const { t } = useTranslation();
   const generateRandomString = (length) => {
@@ -58,9 +58,11 @@ const Authorization = ({ clientId, redirectUri }) => {
 
   return (
     <div className="px-4 py-2 m-6  bg-gradient-to-r from-rose-600 to-violet-600 rounded-lg text-white">
-      <button className="font-bold" onClick={handleAuthorization}>
-        {t("authorize")}
-      </button>
+      <Button 
+      className="font-bold" 
+      onClick={handleAuthorization}
+        children={t("authorize")}
+      />
     </div>
   );
 };

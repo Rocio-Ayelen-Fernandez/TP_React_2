@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import getPlaylistById from "../../services/getPlaylistById";
 import TrackList from "../../components/TrackList/TrackList"; 
+import { useNavigate } from "react-router-dom";
 
 const PlaylistDetails = ({ playlistId }) => {
+    const navigate = useNavigate();
     const [access_token, setAccessToken] = useState("");
     const [playlist, setPlaylist] = useState(null);
 
@@ -20,15 +22,23 @@ const PlaylistDetails = ({ playlistId }) => {
                     const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
                         headers: { Authorization: `Bearer ${access_token}` },
                     });
+
+                    if (!res.ok) {
+                        console.error(`Error fetching playlist: ${res.status} ${res.statusText}`);
+                        navigate("/Error404");
+                        return;
+                    }
+
                     const data = await res.json();
                     setPlaylist(data);
                 } catch (error) {
                     console.error("Error fetching playlist:", error);
+                    navigate("/Error404");
                 }
             };
             fetchPlaylist();
         }
-    }, [access_token, playlistId]);
+    }, [access_token, playlistId, navigate]);
 
     if (!playlist) {
         return <div className="text-white text-center mt-10">Cargando playlist...</div>;

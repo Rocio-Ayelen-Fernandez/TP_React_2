@@ -30,7 +30,17 @@
   background: #6a6a6a; /* Color del thumb al pasar el mouse */
 }
 
-
+@keyframes warp {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 /* :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;

@@ -19,19 +19,24 @@ const AlbumDetails = ({ albumId }) => {
   useEffect(() => {
     if (access_token && albumId) {
       const fetchAlbum = async () => {
-        const res = await fetch(
-          `https://api.spotify.com/v1/albums/${albumId}`,
-          {
+        try {
+          const res = await fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
             headers: { Authorization: `Bearer ${access_token}` },
+          });
+          if (!res.ok) {
+            throw new Error("Album not found");
           }
-        );
-        const data = await res.json();
-        setAlbum(data);
-        getAlbumTracksByAlbumId(albumId);
+          const data = await res.json();
+          setAlbum(data);
+          getAlbumTracksByAlbumId(albumId);
+        } catch (error) {
+          console.error("Error fetching album:", error);
+          navigate("/Error404"); 
+        }
       };
       fetchAlbum();
     }
-  }, [access_token, albumId]);
+  }, [access_token, albumId, navigate]);
 
   const getAlbumTracksByAlbumId = async (id) => {
     try {

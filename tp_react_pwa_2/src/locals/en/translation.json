@@ -21,6 +21,8 @@
     "updating_playlist": "Updating playlist...",
     "successfully_added_tracks": "Successfully added tracks to playlist!",
     "show_playlist": "Show playlist",
-    "hide_playlist": "Hide playlist"
+    "hide_playlist": "Hide playlist",
+    "go_to_home": "Go to home",
+    "page_not_found": "Page not found"
   }
   

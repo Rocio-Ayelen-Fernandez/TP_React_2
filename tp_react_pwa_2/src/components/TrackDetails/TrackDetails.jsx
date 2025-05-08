@@ -18,16 +18,22 @@ const TrackDetails = ({ trackId }) => {
     }, []);
 
     useEffect(() => {
-        console.log("Track ID:", trackId);
         if (access_token && trackId) {
-            const fetchTrack = async () => {
-                const foundTrack = await getTrackById(access_token, trackId);
-                setTrack(foundTrack);
-                console.log(foundTrack.album)
-            };
-            fetchTrack();
+          const fetchTrack = async () => {
+            try {
+              const foundTrack = await getTrackById(access_token, trackId);
+              if (!foundTrack) {
+                throw new Error("Track not found");
+              }
+              setTrack(foundTrack);
+            } catch (error) {
+              console.error("Error fetching track:", error);
+              navigate("/Error404"); 
+            }
+          };
+          fetchTrack();
         }
-    }, [access_token, trackId]);
+      }, [access_token, trackId, navigate]);
 
     const formatDuration = (ms) => {
         const minutes = Math.floor(ms / 60000);
