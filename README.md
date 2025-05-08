@@ -13,9 +13,16 @@
 <img align="center" width="auto" height="auto" src="https://github.com/user-attachments/assets/e2ee50dc-f2b5-4723-b763-b4b007393379" alt="Main_page" >
 
 
-## Descripcion del Proyecto
+## Descripción del Proyecto
 
-Este proyecto utiliza la Api privada de Spotify. Permite a los usuarios visualizar contenido y crear una lista de reproduccion. It allows users to upload, view, and interact with videos. La plataforma obtiene imagenes, informacion, audio con el flujo de autorizacion PKCE. Entre las funcionalidades se encuentra la busqueda por tipo (cancion, playlist, album, artista), visualizacion de informacion de la busqueda, seguimientos de artistas basada en la cuenta registrada y creacion de lista de reproduccion en la misma cuenta, diseño responsive en dispositivos moviles y de escritorio.
+Este proyecto utiliza la API privada de Spotify para permitir a los usuarios explorar contenido y gestionar listas de reproducción. La plataforma obtiene imágenes, información y audio a través del flujo de autorización PKCE, garantizando una experiencia segura. 
+
+Entre sus funcionalidades destacan:
+- Búsqueda por tipo (canción, playlist, álbum, artista).
+- Visualización detallada de la información de cada búsqueda.
+- Seguimiento de artistas basado en la cuenta del usuario.
+- Creación y gestión de listas de reproducción en la cuenta registrada.
+- Diseño responsive adaptable a dispositivos móviles y de escritorio.
 
 ## Componentes Clave
 
@@ -72,5 +79,5 @@ npm run dev
 La aplicacion contiene una clave publica y cuenta para metodos de prueva. 
 Se pueden encontrar estos en la pagina de login.jsx 
 
-Si necesita una nueva clave, puede solicitar una con su cuenta de spotify desde el **Panel de control de desarrolladores de Spotify** ([Spotify Developer Dashboard](https://developer.spotify.com/dashboard)). Desde allí, puedes registrar una aplicación y generar tus credenciales.
+Si necesita una nueva clave, puede solicitar una con su cuenta de spotify desde el [**Panel de control de desarrolladores de Spotify**](https://developer.spotify.com/dashboard). Desde allí, puedes registrar una aplicación y generar tus credenciales.
 ![image](https://github.com/user-attachments/assets/474c7476-37bb-4808-8361-24a0babf6f93)
