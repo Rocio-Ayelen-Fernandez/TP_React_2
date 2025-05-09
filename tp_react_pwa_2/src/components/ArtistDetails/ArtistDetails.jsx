@@ -6,6 +6,8 @@ import ArtistHeader from "../ArtistHeader/ArtistHeader";
 import AlbumList from "../AlbumList/AlbumList";
 import getArtistById from "../../services/getArtistById";
 import getTopTracksByArtist from "../../services/getTopTracksByArtist";
+import { checkIfFollowingArtist, toggleFollowArtist as toggleFollowArtistService } from "../../services/followArtistService";
+import getAlbumsByArtistId from "../../services/getAlbumByArtistId";
 
 const ArtistDetails = ({ artistId }) => {
   const navigate = useNavigate();
@@ -15,22 +17,23 @@ const ArtistDetails = ({ artistId }) => {
   const [topTracks, setTopTracks] = useState([]);
   const { t } = useTranslation();
 
-  // useEffect para obtener el token de acceso desde localStorage al cargar el component
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-
     if (!token || !artistId) return;
-
     const fetchData = async () => {
-
       try {
         const artistData = await getArtistById(token, artistId);
         setArtist(artistData);
-        await Promise.all([
-          fetchAlbums(artistId, token),
-          fetchTopTracks(artistData.id, token),
-          checkIfFollowing(artistId, token),
+
+        const [albumsData, tracksData, followingStatus] = await Promise.all([
+          getAlbumsByArtistId(token, artistId),
+          getTopTracksByArtist(token, artistId),
+          checkIfFollowingArtist(artistId, token),
         ]);
+
+        setAlbums(albumsData);
+        setTopTracks(tracksData);
+        setIsFollowing(followingStatus);
       } catch (error) {
         console.error(t("Error al obtener datos del artista:"), error);
         navigate("/Error404");
@@ -40,75 +43,15 @@ const ArtistDetails = ({ artistId }) => {
     fetchData();
   }, [navigate, artistId, t]);
 
-  const fetchTopTracks = async (id, token) => {
-    try {
-      const tracks = await getTopTracksByArtist(token, id);
-      setTopTracks(tracks);
-    } catch (error) {
-      console.error(t("Error al obtener las canciones populares:"), error);
-    }
-  };
-
-
-  const fetchAlbums = async (id, token) => {
-    try {
-      let allAlbums = [];
-      let url = `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single,compilation&limit=50`;
-
-      while (url) {
-
-        const res = await fetch(url, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-
-        allAlbums = [...allAlbums, ...data.items];
-        url = data.next;
-      }
-
-      setAlbums(allAlbums);
-    } catch (err) {
-      console.error(t("Error al obtener los álbumes:"), err);
-    }
-  };
-
-  const checkIfFollowing = async (id, token) => {
-    try {
-      const res = await fetch(
-        `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await res.json();
-      setIsFollowing(data[0]);
-    } catch (err) {
-      console.error(t("Error al comprobar seguimiento:"), err);
-    }
-  };
-
   const toggleFollowArtist = async () => {
     const token = localStorage.getItem("access_token");
     if (!artist || !token) return;
 
-    const method = isFollowing ? "DELETE" : "PUT";
-    const url = `https://api.spotify.com/v1/me/following?type=artist&ids=${artist.id}`;
-
     try {
-      const res = await fetch(url, {
-        method,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 204) {
-        setIsFollowing(!isFollowing);
-      } else {
-        alert(t("No se pudo actualizar el estado de seguimiento."));
-      }
-    } catch (err) {
-      console.error(t("Error al cambiar el seguimiento:"), err);
+      await toggleFollowArtistService(artist.id, token, isFollowing);
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error(t("Error al seguir o dejar de seguir al artista:"), error);
     }
   };
 

@@ -10,44 +10,22 @@ const AlbumDetails = ({ albumId }) => {
   const { t } = useTranslation()
 
   const navigate = useNavigate();
-// useEffect para obtener el token de acceso desde localStorage al cargar el componente
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token && albumId) {
-      const fetchAlbum = async () => {
-        try {
-          const res = await fetch(`https://api.spotify.com/v1/albums/${albumId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (!res.ok) {
-            throw new Error("Album not found");
-          }
-          const data = await res.json();
-          setAlbum(data);
-          getAlbumTracksByAlbumId(albumId, token);
-        } catch (error) {
-          console.error("Error fetching album:", error);
-          navigate("/Error404"); 
-        }
-      };
-      fetchAlbum();
-    }
-  }, [albumId, navigate, t]);
-
-  const getAlbumTracksByAlbumId = async (id, token) => {
-    try {
-      const res = await fetch(
-        `https://api.spotify.com/v1/albums/${id}/tracks`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await res.json();
-      setAlbumTracks(data.items);
-    } catch (err) {
-      console.error("Error al obtener las canciones", err);
-    }
-  };
+useEffect(() => {
+  const token = localStorage.getItem("access_token");
+  if (token && albumId) {
+    const fetchAlbumWithTracks = async () => {
+      try {
+        const { album, tracks } = await getAlbumWithTracks(token, albumId);
+        setAlbum(album);
+        setAlbumTracks(tracks);
+      } catch (error) {
+        console.error("Error fetching album and tracks:", error);
+        navigate("/Error404");
+      }
+    };
+    fetchAlbumWithTracks();
+  }
+}, [albumId, navigate, t]);
 
   return (
     <div className="relative w-full overflow-hidden shadow-xl">
@@ -79,11 +57,11 @@ const AlbumDetails = ({ albumId }) => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 text-center md:text-left">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 text-center">
                 {album.name}
               </h1>
               <p>
-                {t("artist")}:
+                {t("Artist")}:
                 <span className="ml-1">
                   {album.artists.map((artist, index) => (
                     <span key={artist.id}>

@@ -90,17 +90,17 @@ const ListFavorite = ({ token }) => {
                   <img
                     className="max-w-30 rounded-md h-auto"
                     src={object.album.images[0].url}
-                    alt={object.name || "Sin nombre"}
-                  ></img>
+                    alt={object.name || t("No_name")}
+                  />
                 )}
                 <div>
                   <p>
                     <span className="font-bold text-2xl">
-                      {object.name || "Sin nombre"}
+                      {object.name || t("No_name")}
                     </span>
                   </p>
-                  <p>{object.artists[0].name || "sin artista"}</p>
-                  <p>{object.album.release_date}</p>
+                  <p>{object.artists?.[0]?.name || t("No_artist")}</p>
+                  <p>{object.album?.release_date || t("No_date")}</p>
                 </div>
               </div>
             )}
@@ -110,52 +110,44 @@ const ListFavorite = ({ token }) => {
                 <img
                   className="max-w-30 rounded-md h-auto"
                   src={object.images[0].url}
-                  alt={object.name || "Sin nombre"}
-                ></img>
+                  alt={object.name || t("No_name")}
+                />
               )}
 
               {object.type === "playlist" && (
                 <div className="flex flex-col items-center md:items-start gap-2">
                   <p>
                     <span className="font-bold text-2xl">
-                      {object.name || "Sin nombre"}
+                      {object.name || t("No_name")}
                     </span>
                   </p>
-                  <p>{object.description || "Sin descripcion"}</p>
-                  <p>{object.owner.display_name}</p>
+                  <p>{object.description || t("No_description")}</p>
+                  <p>{object.owner?.display_name || t("No_owner")}</p>
                 </div>
               )}
 
               {object.type === "album" && (
                 <div className="flex flex-col items-center md:flex-row md:items-start gap-2">
                   <p>
-                    <span className="font-bold text-2xl">{object.name || "Sin nombre"}</span>
-                    
+                    <span className="font-bold text-2xl">{object.name || t("No_name")}</span>
                   </p>
-                  <p>
-                    {object.release_date || "Sin fecha"}
-                  </p>
-                  <p>
-                    <span className="font-bold"></span>
-                    {object.artists[0].name || "Sin artista"}
-                  </p>
+                  <p>{object.release_date || t("No_date")}</p>
+                  <p>{object.artists?.[0]?.name || t("No_artist")}</p>
                 </div>
               )}
 
               {object.type === "artist" && (
-                <div className="">
+                <div>
                   <p>
-                    <span className="font-bold text-2xl">
-                      {object.name || "Sin nombre"}
-                    </span>
+                    <span className="font-bold text-2xl">{object.name || t("No_name")}</span>
                   </p>
                   <p>
-                    <span className="font-bold">Seguidores: </span>
-                    {object.followers.total || "No info"}
+                    <span className="font-bold">{t("Followers")}: </span>
+                    {object.followers?.total || t("No_info")}
                   </p>
                   <p>
-                    <span className="font-bold">Genero: </span>
-                    {object.genres[0] || "Sin genero"}
+                    <span className="font-bold">{t("Genre")}: </span>
+                    {object.genres?.[0] || t("No_genre")}
                   </p>
                 </div>
               )}
@@ -173,15 +165,15 @@ const ListFavorite = ({ token }) => {
             {(object.type === "track" ||
               object.type === "album" ||
               object.type === "playlist") && (
-              <div className="flex flex-col md:flex-row justify-center mt-2">
-                <Button
-                  onClick={() => toggleVisibility(object.id)}
-                  className="cursor-pointer px-6 py-2 sm:rounded-full md:rounded-4xl rounded-2xl font-medium shadow-lg transition-transform duration-300 transform hover:scale-101 focus:outline-none text-sm sm:text-base bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500  text-center"
-                >
-                  {isVisible === object.id ? t("Hide_Player") : t("Show_Player")}
-                </Button>
-              </div>
-            )}
+                <div className="flex flex-col md:flex-row justify-center mt-2">
+                  <Button
+                    onClick={() => toggleVisibility(object.id)}
+                    className="cursor-pointer px-6 py-2 sm:rounded-full md:rounded-4xl rounded-2xl font-medium shadow-lg transition-transform duration-300 transform hover:scale-101 focus:outline-none text-sm sm:text-base bg-gradient-to-r from-green-500 to-violet-600 hover:from-purple-400 hover:to-violet-500  text-center"
+                  >
+                    {isVisible === object.id ? t("Hide_Player") : t("Show_Player")}
+                  </Button>
+                </div>
+              )}
           </div>
         </div>
         {isVisible === object.id ? (
@@ -210,8 +202,9 @@ const ListFavorite = ({ token }) => {
                 ) : (
                   <div className="backdrop-blur-md bg-none bg-white/5 border border-white/10 shadow-inner rounded-md p-4">
                     <p className="text-gray-300 shadow-indigo-900">
-                      No hay {key.toUpperCase()} en favoritos
+                      {t("No_favorites", { type: key.toUpperCase() })}
                     </p>
+
                   </div>
                 )}
               </div>

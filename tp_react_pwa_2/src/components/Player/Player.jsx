@@ -37,7 +37,7 @@ const Player = ({ id, access_token, type }) => {
     fetchData();
   }, [id, access_token, type]);
 
-  
+
   const getEmbedUrl = () => {
     if (!data || !type) return null;
 
@@ -55,7 +55,7 @@ const Player = ({ id, access_token, type }) => {
 
   return (
     <div className="flex flex-col justify-center md:justify-end text-white">
-      
+
       <div id="embed-iframe" className="mt-2">
         {data ? (
           <iframe

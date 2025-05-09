@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { ROUTES } from "../../const/routes";
-import { useTranslation } from "react-i18next";
 
 const AlbumCard = ({ album }) => {
   const navigate = useNavigate()

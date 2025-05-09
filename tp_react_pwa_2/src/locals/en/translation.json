@@ -7,6 +7,7 @@
   "Artists": "Artists",
   "Artist": "Artist",
   "Playlists": "Playlists",
+  "add_to_playlist": "Add to Playlist",
   "welcome": "Welcome",
   "home": "Home",
   "title": "Title",
@@ -36,5 +37,14 @@
   "show_playlist": "Show playlist",
   "hide_playlist": "Hide playlist",
   "go_to_home": "Go to home",
-  "page_not_found": "Page not found"
+  "page_not_found": "Page not found",
+  "No_name": "No Name",
+  "No_artist": "No Artist",
+  "No_date": "No Date",
+  "No_description": "No Description",
+  "No_owner": "No Creator",
+  "No_info": "No Information",
+  "No_genre": "No Genre",
+  "No_favorites": "There's no {{type}} in favorites"
+
 }

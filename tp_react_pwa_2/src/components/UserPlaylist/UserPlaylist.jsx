@@ -87,21 +87,21 @@ const UserPlaylist = ({ playlistId }) => {
               />
             ) : (
               <div className="w-auto h-22 bg-gray-700 rounded shadow-lg flex items-center justify-center text-gray-400">
-                Sin imagen
+                {t("without_image")}
               </div>
             )}
             <div>
               <h1 className="font-bold">{playlist.name}</h1>
               <p className="mt-1 text-gray-400 text-sm">
-                {playlist.tracks.total} canciones
+                {playlist.tracks.total} {t("Songs")}
               </p>
             </div>
           </div>
           <div className="w-full">
             <div className="grid grid-cols-12 gap-6 px-4 py-2 border-b text-sm text-gray-300 uppercase tracking-wider">
               <div className="col-span-1">#</div>
-              <div className="col-span-5">Título</div>
-              <div className="col-span-3">Artista</div>
+              <div className="col-span-5">{t("title")}</div>
+              <div className="col-span-3">{t("Artist")}</div>
             </div>
 
             {playlist.tracks.items.map((item, index) => (

@@ -73,9 +73,6 @@ const AddToFavorite = ({ id, type }) => {
           onClick={handleAddToFavorites}
         
         />
-        {/* <button onClick={handleAddToFavorites}>
-          
-        </button> */}
       </div>
     </div>
   );

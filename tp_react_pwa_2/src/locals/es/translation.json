@@ -7,6 +7,7 @@
   "Artist": "Artista",
   "Compilations": "Compilaciones",
   "Playlists": "Listas de reproducción",
+  "add_to_playlist": "Agregar a Playlist",
   "welcome": "Bienvenido",
   "listen_on_spotify": "Escuchar en Spotify",
   "duration": "Duración",
@@ -36,5 +37,14 @@
   "show_playlist": "Mostrar lista de reproducción",
   "hide_playlist": "Esconder lista de reproducción",
   "go_to_home": "Ir a inicio",
-  "page_not_found": "Pagina no encontrada"
+  "page_not_found": "Pagina no encontrada",
+  "No_name": "Sin nombre",
+  "No_artist": "Sin artista",
+  "No_date": "Sin fecha",
+  "No_description": "Sin descripción",
+  "No_owner": "Sin creador",
+  "No_info": "Sin información",
+  "No_genre": "Sin género",
+  "No_favorites": "No hay {{type}} en favoritos"
+
 }

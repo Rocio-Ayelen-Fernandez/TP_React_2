@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const SearchInput = ({ onSearch }) => {
@@ -12,20 +12,18 @@ const SearchInput = ({ onSearch }) => {
 
     }
 
-    return(
+    return (
 
         <div>
 
-            <input 
+            <input
                 className="border-2 border-white/50 hover:border-white/80 rounded-xl p-2 md:w-xl "
-                type="text" 
+                type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder={t("search")}
             />
-            {/* <button onClick={() => onSearch(searchTerm)}>Search</button> */}
-
         </div>
     )
 }
