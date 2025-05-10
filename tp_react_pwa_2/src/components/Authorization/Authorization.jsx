@@ -52,7 +52,6 @@ const Authorization = ({ clientId, redirectUri }) => {
     };
 
     authUrl.search = new URLSearchParams(params).toString();
-    console.log("Redirecting to:", authUrl.toString());
     window.location.href = authUrl.toString(); // Redirigir al usuario
   };
 

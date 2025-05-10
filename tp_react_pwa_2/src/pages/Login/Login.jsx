@@ -8,7 +8,7 @@ const Login = () => {
   // 2c33d57b71d945cd8af77809beddbdce (Cuenta OurApp)
   // email: spotifyapiapp.2025@gmail.com
   // password: SpotifyApp2025
-  const clientId = "2c33d57b71d945cd8af77809beddbdce";
+  const clientId = "2479f37942694919ba1f105622b0d8ec";
   const redirectUri = window.location.origin + "/login";
       
   const navigate = useNavigate();
@@ -41,20 +41,16 @@ const Login = () => {
         throw new Error("Error fetching token: " + response.statusText);
       }
       const data = await response.json();
-      console.log("Token data:", data);
   
       // Guardar el token en localStorage
       localStorage.setItem("access_token", data.access_token);
-      console.log("Access token saved:", data.access_token);
   
       if (data.refresh_token) {
         localStorage.setItem("refresh_token", data.refresh_token);
-        console.log("Refresh token saved:", data.refresh_token);
       }
       if (data.expires_in) {
         const expirationTime = Date.now() + data.expires_in * 1000;
         localStorage.setItem("token_expiration", expirationTime.toString());
-        console.log("Token expiration saved:", expirationTime);
       }
   
       // Redirigir al Home
@@ -70,7 +66,6 @@ const Login = () => {
       const authorizationCode = urlParams.get("code");
   
       if (authorizationCode) {
-        console.log("Authorization code:", authorizationCode);
   
         localStorage.setItem("authorization_code", authorizationCode);
   
@@ -80,7 +75,7 @@ const Login = () => {
         const newUrl = window.location.origin + window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
       } else {
-        console.log("Authorization code not found in URL.");
+        console.error("Authorization code not found in URL.");
       }
     };
   

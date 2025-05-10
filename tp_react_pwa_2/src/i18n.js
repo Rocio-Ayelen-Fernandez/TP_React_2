@@ -5,9 +5,11 @@ import { initReactI18next } from "react-i18next";
 import translationEN from "./locals/en/translation.json";
 import translationES from "./locals/es/translation.json";
 
+// Trae el idioma del localStorage
+const savedLang = localStorage.getItem("language");
 // Detecta idioma del navegador
-const userLang = navigator.language || navigator.userLanguage; 
-const initialLang = userLang.startsWith('es') ? 'es' : 'en';
+const userLang = navigator.language || navigator.userLanguage;
+const initialLang = savedLang || (userLang.startsWith("es") ? "es" : "en");
 
 // Definí las traducciones
 const resources = {

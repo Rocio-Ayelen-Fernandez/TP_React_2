@@ -27,7 +27,6 @@ const ListFavorite = ({ token }) => {
   // Obtener la lista de favoritos desde localStorage
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorite")) || {};
-    console.log("Stored Favorites:", storedFavorites);
 
 
     if (typeof storedFavorites === "object" && storedFavorites !== null) {
@@ -54,7 +53,6 @@ const ListFavorite = ({ token }) => {
       }
 
       setData(loadedData);
-      console.log("Loaded Data:", loadedData);
     };
 
     if (Object.keys(favoriteList).length > 0) {

@@ -6,9 +6,13 @@ const LanguageSelector = () => {
   const nextLang = i18n.language === 'en' ? 'es' : 'en';
   const label = i18n.language === 'en' ? 'ES' : 'EN';
 
+  const handleChangeLanguage = () => {
+    i18n.changeLanguage(nextLang);
+    localStorage.setItem("language", nextLang);
+  };
   return (
     <Button 
-      onClick={() => i18n.changeLanguage(nextLang)}
+    onClick={handleChangeLanguage}
       className="px-3 py-1 border-2 border-white rounded hover:bg-white hover:text-black transition-colors font-semi-bold"
     >
       {label}

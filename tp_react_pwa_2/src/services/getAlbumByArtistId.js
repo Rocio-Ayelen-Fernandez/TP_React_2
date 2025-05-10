@@ -1,6 +1,5 @@
 const getAlbumsByArtistId = async (token, artistId) => {
     const i  = 0
-console.log("getAlbumbsByArtistId:", i + 1);
   let allAlbums = [];
   let url = `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album,single,compilation&limit=50`;
 
