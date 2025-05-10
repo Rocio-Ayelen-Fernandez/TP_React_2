@@ -37,6 +37,7 @@
   "show_playlist": "Mostrar lista de reproducción",
   "hide_playlist": "Esconder lista de reproducción",
   "go_to_home": "Ir a inicio",
+  "go_to_login": "Ir a inicio de sesión",
   "page_not_found": "Pagina no encontrada",
   "No_name": "Sin nombre",
   "No_artist": "Sin artista",
@@ -45,6 +46,8 @@
   "No_owner": "Sin creador",
   "No_info": "Sin información",
   "No_genre": "Sin género",
-  "No_favorites": "No hay {{type}} en favoritos"
+  "No_favorites": "No hay {{type}} en favoritos",
+  "not_authorized": "Esta cuenta no esta autorizada para acceder a esta aplicación."
+
 
 }

@@ -20,7 +20,7 @@ useEffect(() => {
         setAlbumTracks(tracks);
       } catch (error) {
         console.error("Error fetching album and tracks:", error);
-        navigate("/Error404");
+        navigate("/Error");
       }
     };
     fetchAlbumWithTracks();

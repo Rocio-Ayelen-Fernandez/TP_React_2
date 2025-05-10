@@ -29,6 +29,7 @@ const Favorites = () => {
         } catch (err) {
           console.error("Error fetching user profile:", err.message);
           setError(err.message);
+          setTimeout(navigate("/Error?error=403"), 1000); // Redirige al error
         }
       };
   

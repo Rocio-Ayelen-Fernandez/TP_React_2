@@ -15,7 +15,7 @@ const PlaylistDetails = ({ playlistId }) => {
                     const data = await getPlaylistById(token, playlistId);
                     setPlaylist(data);
                 } catch (error) {
-                    navigate("/Error404");
+                    navigate("/Error?error=404");
                 }
             };
             fetchPlaylist();

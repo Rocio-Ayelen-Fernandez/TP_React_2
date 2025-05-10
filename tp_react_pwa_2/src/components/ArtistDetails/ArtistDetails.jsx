@@ -36,7 +36,7 @@ const ArtistDetails = ({ artistId }) => {
         setIsFollowing(followingStatus);
       } catch (error) {
         console.error(t("Error al obtener datos del artista:"), error);
-        navigate("/Error404");
+        navigate("/Error?error=404");
       }
     };
 

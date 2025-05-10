@@ -11,6 +11,7 @@ import Button from "../../components/Button/Button";
 import { ArrowLeft } from "lucide-react";
 import fetchSpotifyData from "../../services/fetchSpotifyData.js";
 import Footer from "../../components/Footer/Footer.jsx";
+import getUserProfile from "../../services/getUserProfile.js";
 
 const Home = () => {
   const { t } = useTranslation(); // Traducciones
@@ -40,7 +41,22 @@ const Home = () => {
     const valid = isTokenValid();
     if (!valid) {
       navigate("/Login"); // Redirige al login si el token es inválido
+    }else{
+      //Verificar que el usuario este validado
+      const fetchUserProfile = async () => {
+        try {
+          const profile = await getUserProfile(access_token);
+
+        } catch (err) {
+        
+          console.error("Error fetching user profile:", err.message);
+          setTimeout(navigate("/Error?error=403"), 1000); // Redirige al error
+        }
+      };
+  
+      fetchUserProfile();
     }
+
   }, [navigate]);
 
     // Estados relacionados a la búsqueda

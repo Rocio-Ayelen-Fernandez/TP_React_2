@@ -20,7 +20,7 @@ const TrackDetails = ({ trackId }) => {
               setTrack(foundTrack);
             } catch (error) {
               console.error("Error fetching track:", error);
-              navigate("/Error404"); 
+              navigate("/Error?error=404"); 
             }
           };
           fetchTrack();

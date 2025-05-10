@@ -43,7 +43,7 @@ const Details = () => {
       navigate("/Login");
     }
     if (!validTypes.includes(type)) {
-      navigate("/Error404");
+      navigate("/Error?error=404");
     }
   }, [navigate, type]);
 

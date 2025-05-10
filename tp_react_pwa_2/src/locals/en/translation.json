@@ -37,6 +37,7 @@
   "show_playlist": "Show playlist",
   "hide_playlist": "Hide playlist",
   "go_to_home": "Go to home",
+  "go_to_login": "Go to login",
   "page_not_found": "Page not found",
   "No_name": "No Name",
   "No_artist": "No Artist",
@@ -45,6 +46,7 @@
   "No_owner": "No Creator",
   "No_info": "No Information",
   "No_genre": "No Genre",
-  "No_favorites": "There's no {{type}} in favorites"
+  "No_favorites": "There's no {{type}} in favorites",
+  "not_authorized": "This account is not authorized to access this application."
 
 }
