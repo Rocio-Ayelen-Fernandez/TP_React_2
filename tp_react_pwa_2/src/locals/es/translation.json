@@ -47,7 +47,12 @@
   "No_info": "Sin información",
   "No_genre": "Sin género",
   "No_favorites": "No hay {{type}} en favoritos",
-  "not_authorized": "Esta cuenta no esta autorizada para acceder a esta aplicación."
+  "not_authorized": "Esta cuenta no esta autorizada para acceder a esta aplicación.",
+  "Github_Profiles": "Perfiles de Github",
+  "Useful_Links": "Enlaces útiles",
+  "Proyect_Repository": "Repositorio del proyecto",
+  "Spotify_Documentation": "Documentación de Spotify",
+  "Oficial_Spotify_Page" : "Documentación oficial de Spotify"
 
 
 }

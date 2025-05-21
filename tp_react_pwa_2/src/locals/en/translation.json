@@ -47,6 +47,11 @@
   "No_info": "No Information",
   "No_genre": "No Genre",
   "No_favorites": "There's no {{type}} in favorites",
-  "not_authorized": "This account is not authorized to access this application."
+  "not_authorized": "This account is not authorized to access this application.",
+  "Github_Profiles": "Github Profiles",
+  "Useful_Links": "Useful links",
+  "Proyect_Repository": "Proyect repository",
+  "Spotify_Documentation": "Spotify documentation",
+  "Oficial_Spotify_Page": "Oficial spotify page"
 
 }
